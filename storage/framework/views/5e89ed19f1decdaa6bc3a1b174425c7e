@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+   
+
+        <?php echo e(HTML::style('sximo/js/status.css')); ?>	
+        <?php echo e(HTML::script('sximo/js/status.js')); ?>
+
+
+
+
+
+    </body> 
+</html>
