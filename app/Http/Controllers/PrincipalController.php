@@ -100,13 +100,22 @@ class PrincipalController extends Controller {
             
             $detail9 = Musers:: where('email', '=', Input::get('email'))->get();
           
+            
+            
+            
             if (count($detail9) == 0) {
                 
              $max_account= Account::max('ACCOUNT') + 1;
               // Insert Account
+              if($request->input('page_type') == 'BRAND'){
+                    $st='PRINCIPAL' ;
+                  }else  if($request->input('page_type') == 'INSURER'){
+                   $st='INSURER' ;
+                  }
+             
                  Account::insert([[
                    'ACCOUNT' => $max_account,
-                   'ACCOUNT_TYPE' => 'PRINCIPAL',
+                   'ACCOUNT_TYPE' => $st,
                    'STATUS' => 1,  
                    'UCO' => \Session::get('uid'),   
                ],
@@ -127,6 +136,7 @@ class PrincipalController extends Controller {
                    'PRINCIPAL_ID' => $max_account,
                    'PRINCIPAL_NAME' => $request->input('ORG_NAME'),
                    'PRINCIPAL_CODE' => $request->input('ORG_CODE'), 
+            'OWNER_TYPE' => $request->input('page_type'), 
                    'ORDER_COLLABORATION' => $oc,   
                  'PRODUCT_TRACING' => $pt,  
                  'STATUS' => 'N',   
@@ -200,18 +210,20 @@ class PrincipalController extends Controller {
                   'ORGANIZATION' => 'Y',
                ]);        
                
+          //   print_r($request->input('page_type'));exit();
+             
         if($request->input('page_type') == 'BRAND'){
           
             $getBrand= \App\Models\brand::where('BRAND_CODE',$request->input('ORG_CODE'))->get();
             if(count($getBrand) == 0){
                 \App\Models\brand::insert([
-                   'BRAND_CODE' =>  $request->input('ORG_CODE'),
-                   'BRAND_NAME' => $request->input('ORG_NAME'),
+                   'BRAND_CODE' =>  $request->input('ORG_CODE1'),
+                   'BRAND_NAME' => $request->input('ORG_NAME1'),
                  'UCO' => \Session::get('uid'),
                 
                ]);  
              DB::table('principal_brand')->insert([
-                   'BRAND_CODE' =>  $request->input('ORG_CODE'),
+                   'BRAND_CODE' =>  $request->input('ORG_CODE1'),
                    'PRINCIPAL_ID' =>$max_account,
                  'UCO' => \Session::get('uid'),
                 
@@ -220,13 +232,27 @@ class PrincipalController extends Controller {
                 
             }
             
+        }else  if($request->input('page_type') == 'INSURER'){
+             DB::table('insurer')->insert([
+                   'INSURER_NAME' =>  $request->input('ORG_NAME1'),
+                 'INSURER_CODE' =>  $request->input('ORG_CODE1'),
+                   'INSURER_ID' =>$max_account,
+                 'UCO' => \Session::get('uid'),
+                
+               ]);   
         }        
                 
                 
 
              DB::commit();
              } else {
-                return Redirect::to('principal/create')->with('message', \SiteHelpers::alert('error', 'This Principal Already Exists'));
+                  if($request->input('page_type') == 'BRAND'){
+                       return Redirect::to('principal/create')->with('message', \SiteHelpers::alert('error', 'This Principal Already Exists'));
+                  }else  if($request->input('page_type') == 'INSURER'){
+                     return Redirect::to('insurer/create')->with('message', \SiteHelpers::alert('error', 'This Insurer Already Exists'));  
+                  }
+                 
+               
             }
              
              
@@ -237,7 +263,12 @@ class PrincipalController extends Controller {
 //                return Redirect::to('saleinvoice/create');
 //            }
         }
-        return Redirect::to('principal')->with('message', \SiteHelpers::alert('success', \Lang::get('core.note_success')));
+         if($request->input('page_type') == 'BRAND'){
+                       return Redirect::to('principal')->with('message', \SiteHelpers::alert('success', \Lang::get('core.note_success')));
+                  }else  if($request->input('page_type') == 'INSURER'){
+                    return Redirect::to('insurer')->with('message', \SiteHelpers::alert('success', \Lang::get('core.note_success')));
+                  }
+       
     }     
    
         

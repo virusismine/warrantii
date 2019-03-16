@@ -4,7 +4,7 @@ use App\Http\Controllers\controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use Validator, Input, Redirect ; 
+use Validator, Input, Redirect, DB ; 
 
 
 class CategoryController extends Controller {
@@ -38,8 +38,112 @@ class CategoryController extends Controller {
 
 		
 	}
+        
+                public function create(){
+                $this->data = array(
+			'pageTitle'	=> 'Create Category',
+			'pageNote'	=> '',
+			'pageModule'=> 'Category',
+			'return'	=> self::returnUrl(),
+		);
+                return view('category.create',$this->data );
+                } 
+                
+                public function show($id) {
+                $category = Category::where('CATEGORY_CODE','=', $id)->get();
+                $this->data = array(
+			'pageTitle'	=> 'Show category',
+			'pageNote'	=> 'sdfgsd',
+			'pageModule'    => 'category',
+			'return'	=> self::returnUrl(),
+                        'category' =>  $category,
+		);
+                return View('category.show',$this->data);
+                }
+        
+                public function edit($id) {
+                $category = Category::where('CATEGORY_CODE','=', $id)->get();
+                $this->data = array(
+			'pageTitle'	=> 'Show category',
+			'pageNote'	=> 'sdfgsd',
+			'pageModule'    => 'category',
+			'return'	=> self::returnUrl(),
+                        'category' =>  $category,
+		);
+                return View('category.edit',$this->data);
+                }
+                
+        
+           public function store(Request $request) {
+               
+           $rules = array(
+           );
+           $validator = Validator::make($data = Input::all(), $rules);
+           if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+           } else {
+            DB::beginTransaction();
+//           try {
 
-	public function getIndex( Request $request )
+            $detail9 = Category:: where('CATEGORY_CODE', '=', Input::get('CATEGORY_CODE'))->get();
+          
+            if (count($detail9) == 0) {
+                
+                Category::insert([
+                  'CATEGORY_CODE' => $request->input('CATEGORY_CODE'),
+                  'CATEGORY_NAME' => $request->input('CATEGORY_NAME'),
+                    'PARENT_CATEGORY_CODE' => $request->input('PARENT_CATEGORY_CODE'),
+                    'INSTALLATION' => $request->input('INSTALLATION'),
+                  'STATUS' => 'N',
+                  'UCO' => \Session::get('uid'),
+              ]);
+          
+             DB::commit();
+             } else {
+                return Redirect::to('category/create')->with('message', \SiteHelpers::alert('error', 'This Category Already Exists'));
+            }
+             
+//            } catch (Exception $e) {
+//                DB::rollback();
+//                Session::flash('message', SiteHelpers::alert('error', 'Something Went Wrong'));
+//                return Redirect::to('saleinvoice/create');
+//            }
+        }
+       //    return Redirect::to('user/login')->with('message',\SiteHelpers::alert('success',$message));
+        return Redirect::to('category')->with('message', \SiteHelpers::alert('success', \Lang::get('core.note_success')));
+    }  
+        
+        
+        public function update(Request $request) {
+   
+        $rules = array();
+        $validator = Validator::make($data = Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        } else {
+            DB::beginTransaction();
+//            try {
+            
+            Category:: where('CATEGORY_CODE', '=', $request->input('CATEGORY_CODE'))
+                    ->update(array(
+                        'CATEGORY_NAME' => $request->input('CATEGORY_NAME'),
+                        'PARENT_CATEGORY_CODE' => $request->input('PARENT_CATEGORY_CODE'),
+                        'INSTALLATION' => $request->input('INSTALLATION'),
+                        'ULUO' => \Session::get('uid'),
+            ));
+            
+            DB::commit();
+//            } catch (Exception $e) {
+//
+//                Session::flash('message', 'Record already exists');
+//                return Redirect::to('saleinvoice/' . $id . '/edit');
+//            }
+        }
+         return Redirect::to('category')->with('message', \SiteHelpers::alert('success', \Lang::get('core.note_success')));
+    }
+        
+
+	public function index( Request $request )
 	{
 		$sort = (!is_null($request->input('sort')) ? $request->input('sort') : ''); 
 		$order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');

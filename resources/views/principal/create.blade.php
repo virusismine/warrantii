@@ -244,18 +244,41 @@ span .help-inline {display: none !important;}
 
                 <div class="form-group">
                   <div class="col-md-12">
-                    <label for="ORG_NAME" class=" control-label text-left">Brand Name </label>
+                    <label for="ORG_NAME" class=" control-label text-left">Legal Name </label>
                     {!! Form::text('ORG_NAME', Input::old('ORG_NAME'),array('class'=>'form-control ORG_NAME', 'placeholder'=>'','required'=>'','pattern'=>'[a-zA-Z ]{2,}', 'title'=>'Enter name only alphabet')) !!} 
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
-                    <label for="ORG_CODE" class=" control-label text-left">Brand Code </label>
+                    <label for="ORG_CODE" class=" control-label text-left">Legal Code </label>
                     {!! Form::text('ORG_CODE', Input::old('ORG_CODE'),array('class'=>'form-control ORG_CODE', 'placeholder'=>'','required','maxlength'=>'20' ,'pattern'=>'^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$','title'=>'Enter code in Capital and Numeric')) !!} 
                   </div> 
                 </div>
+    <div class="form-group">
+                  <div class="col-md-12">
+                      @if($tp == 'BRAND')
+                    <label for="ORG_NAME" class=" control-label text-left">Brand Name </label>
+                    @else
+                     <label for="ORG_NAME" class=" control-label text-left">Insurer Name </label>
+                    @endif
+                    {!! Form::text('ORG_NAME1', Input::old('ORG_NAME1'),array('class'=>'form-control ORG_NAME1', 'placeholder'=>'','required'=>'','pattern'=>'[a-zA-Z ]{2,}', 'title'=>'Enter name only alphabet')) !!} 
+                  </div> 
+                </div>
 
+                <div class="form-group">
+                  <div class="col-md-12">
+                       @if($tp == 'BRAND')
+                     <label for="ORG_CODE" class=" control-label text-left">Brand Code </label>
+                    @else
+                    <label for="ORG_CODE" class=" control-label text-left">Insurer Code </label>
+                    @endif
+                  
+                    {!! Form::text('ORG_CODE1', Input::old('ORG_CODE1'),array('class'=>'form-control ORG_CODE1', 'placeholder'=>'','required','maxlength'=>'20' ,'pattern'=>'^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$','title'=>'Enter code in Capital and Numeric')) !!} 
+                  </div> 
+                </div>
+                  
+                  
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_EMAIL_ADDRESS" class=" control-label text-left"> Email </label>
@@ -263,7 +286,14 @@ span .help-inline {display: none !important;}
                   </div> 
                 </div>
 
-                <div class="form-group">
+                
+
+
+              </div>
+
+
+              <div class="col-md-3 col-sm-3 col-xs-3">
+<div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_PHONE_MOBILE" class=" control-label text-left"> Mobile </label>
                     {!! Form::text('ORG_PHONE_MOBILE', Input::old('ORG_PHONE_MOBILE'),array('class'=>'form-control ORG_PHONE_MOBILE', 'placeholder'=>'','required','maxlength'=>'10' ,'pattern'=>'[0-9]{10,10}','title'=>'Enter a valid mobile number' )) !!} 
@@ -276,13 +306,6 @@ span .help-inline {display: none !important;}
                     {!! Form::text('ORG_ADDR_HOUSE_NO', Input::old('ORG_ADDR_HOUSE_NO'),array('class'=>'form-control', 'placeholder'=>'')) !!} 
                   </div> 
                 </div>
-
-
-              </div>
-
-
-              <div class="col-md-3 col-sm-3 col-xs-3">
-
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_DIST" class=" control-label text-left"> Address </label>
@@ -316,26 +339,27 @@ span .help-inline {display: none !important;}
                   </div> 
                 </div>
                   
-                <div class="form-group">
-                  <div class="col-md-12">
-                    <label for="ORG_ADDR_CITYOVI" class=" control-label text-left"> City </label>
-                    {!! Form::select('ORG_ADDR_CITYOVI',array(''=>'Select City')+$city,  Input::old('ORG_ADDR_CITYOVI'), array('class' => 'form-control ORG_ADDR_CITYOVI', 'id'=>'ORG_ADDR_CITYOVI', 'required'=>'', 'title'=>'Please select city' )) !!}
-                  </div> 
-                </div>
+               
 
-                <div class="form-group">
-                  <div class="col-md-12">
-                    <label for="ORG_ADDR_STATE" class=" control-label text-left"> State </label>
-                    {!! Form::select('ORG_ADDR_STATE',array(''=>'Select State')+$state,  Input::old('ORG_ADDR_STATE'), array('class' => 'form-control ORG_ADDR_STATE','id'=>'ORG_ADDR_STATE','required'=>'', 'title'=>'Please select state' )) !!}
-                  </div> 
-                </div>
+               
 
               </div>           
 
 
 
               <div class="col-md-3 col-sm-3 col-xs-3">
-
+                   <div class="form-group">
+                  <div class="col-md-12">
+                    <label for="ORG_ADDR_CITYOVI" class=" control-label text-left"> City </label>
+                    {!! Form::select('ORG_ADDR_CITYOVI',array(''=>'Select City')+$city,  Input::old('ORG_ADDR_CITYOVI'), array('class' => 'form-control ORG_ADDR_CITYOVI', 'id'=>'ORG_ADDR_CITYOVI', 'required'=>'', 'title'=>'Please select city' )) !!}
+                  </div> 
+                </div>
+ <div class="form-group">
+                  <div class="col-md-12">
+                    <label for="ORG_ADDR_STATE" class=" control-label text-left"> State </label>
+                    {!! Form::select('ORG_ADDR_STATE',array(''=>'Select State')+$state,  Input::old('ORG_ADDR_STATE'), array('class' => 'form-control ORG_ADDR_STATE','id'=>'ORG_ADDR_STATE','required'=>'', 'title'=>'Please select state' )) !!}
+                  </div> 
+                </div>
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_COUNTRY" class=" control-label text-left"> Country </label>
@@ -368,18 +392,18 @@ span .help-inline {display: none !important;}
                   </div> 
                 </div>
 
-                <div class="form-group">
-                  <div class="col-md-12">
-                    <label for="PC_DESCRIPTION" class=" control-label text-left"> Description </label>
-                    {!! Form::text('PC_DESCRIPTION', Input::old('PC_DESCRIPTION'),array('class'=>'form-control PC_DESCRIPTION', 'placeholder'=>'')) !!} 
-                  </div> 
-                </div>
+              
 
               </div>
                  
                  
               <div class="col-md-3 col-sm-3 col-xs-3">
-
+  <div class="form-group">
+                  <div class="col-md-12">
+                    <label for="PC_DESCRIPTION" class=" control-label text-left"> Description </label>
+                    {!! Form::text('PC_DESCRIPTION', Input::old('PC_DESCRIPTION'),array('class'=>'form-control PC_DESCRIPTION', 'placeholder'=>'')) !!} 
+                  </div> 
+                </div>
                 <div class="form-group">
                     <div class="col-md-12" id="collaboration">
                     <label for="ORDER_COLLABORATION" class=" control-label text-left"> Order Collaboration </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{ asset('sximo/images/question.png')}}" /></a><br>

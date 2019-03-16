@@ -4,7 +4,7 @@ use App\Http\Controllers\controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use Validator, Input, Redirect ; 
+use Validator, Input, Redirect, DB ; 
 
 
 class BrandController extends Controller {
@@ -35,11 +35,120 @@ class BrandController extends Controller {
 		$lang = (\Session::get('lang') != "" ? \Session::get('lang') : CNF_LANG);
 		\App::setLocale($lang);
 		}  
-
-		
 	}
+        
+        public function show($id) {
+                    
+        $brand = Brand::where('BRAND_CODE','=', $id)->get();
+                $this->data = array(
+			'pageTitle'	=> 'Show Brand',
+			'pageNote'	=> 'sdfgsd',
+			'pageModule'=> 'brand',
+			'return'	=> self::returnUrl(),
+                        'brand' =>  $brand,
+		);
+            
+        return View('brand.show',$this->data);
+        }
+        
+        public function edit($id) {
+                    
+        $brand = Brand::where('BRAND_CODE','=', $id)->get();
+      
+                $this->data = array(
+			'pageTitle'	=> 'Show Brand',
+			'pageNote'	=> 'sdfgsd',
+			'pageModule'=> 'brand',
+			'return'	=> self::returnUrl(),
+                        'brand' =>  $brand,
+		);
+            
+        return View('brand.edit',$this->data);
+        }        
+        
+        
+        public function create(){
+            
+                $this->data = array(
+			'pageTitle'	=> 'Create Brand',
+			'pageNote'	=> '',
+			'pageModule'=> 'brand',
+			'return'	=> self::returnUrl(),
+		);
+        return view('brand.create',$this->data );
+        } 
+        
+           public function store(Request $request) {
+               
+             
+               
+           $rules = array(
+           );
+           $validator = Validator::make($data = Input::all(), $rules);
+           if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+           } else {
+            DB::beginTransaction();
+//           try {
+//                  creating object
 
-	public function getIndex( Request $request )
+           
+            $detail9 = Brand:: where('BRAND_CODE', '=', Input::get('BRAND_CODE'))->get();
+          
+            if (count($detail9) == 0) {
+                
+                
+                Brand::insert([
+                  'BRAND_CODE' => $request->input('BRAND_CODE'),
+                  'BRAND_NAME' => $request->input('BRAND_NAME'),
+                  'STATUS' => 'N',
+                  'UCO' => \Session::get('uid'),
+              ]);
+          
+             DB::commit();
+             } else {
+                return Redirect::to('brand/create')->with('message', \SiteHelpers::alert('error', 'This Brand Already Exists'));
+            }
+             
+//            } catch (Exception $e) {
+//                DB::rollback();
+//                Session::flash('message', SiteHelpers::alert('error', 'Something Went Wrong'));
+//                return Redirect::to('saleinvoice/create');
+//            }
+        }
+       //    return Redirect::to('user/login')->with('message',\SiteHelpers::alert('success',$message));
+        return Redirect::to('brand')->with('message', \SiteHelpers::alert('success', \Lang::get('core.note_success')));
+    }     
+    
+        public function update(Request $request) {
+   
+        $rules = array();
+        $validator = Validator::make($data = Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        } else {
+            DB::beginTransaction();
+//            try {
+            
+             Brand:: where('BRAND_CODE', '=', $request->input('BRAND_CODE'))
+                    ->update(array(
+                        'BRAND_NAME' => $request->input('BRAND_NAME'),
+                        'ULUO' => \Session::get('uid'),
+            ));
+            
+            DB::commit();
+//            } catch (Exception $e) {
+//
+//                Session::flash('message', 'Record already exists');
+//                return Redirect::to('saleinvoice/' . $id . '/edit');
+//            }
+        }
+         return Redirect::to('brand')->with('message', \SiteHelpers::alert('success', \Lang::get('core.note_success')));
+    } 
+    
+        
+
+	public function index( Request $request )
 	{
 		$sort = (!is_null($request->input('sort')) ? $request->input('sort') : ''); 
 		$order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
