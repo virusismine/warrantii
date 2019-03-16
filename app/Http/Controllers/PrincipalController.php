@@ -62,7 +62,47 @@ class PrincipalController extends Controller {
 			
 		);
          return view('principal.create',$this->data );
-   }     
+   }    
+
+           public function edit($id) {
+             
+        $principal = Principal::where('PRINCIPAL_ID','=', $id)->get();
+        $principalclass = DB::table('principal_class')->where('PRINCIPAL_ID','=', $principal[0]->PRINCIPAL_ID)->get();
+        $city = DB::table('cities')->orderBy('city_name','ASC')->lists('city_name','city_id'); 
+        $state = DB::table('state_code_master')->lists('STATE_NAME','STATE_CODE_ID');
+        $country = DB::table('country_master')->lists('COUNTRY_NAME','COUNTRY_ID');
+        $organization = Organisation::where('ORG_UA_ID','=',$principal[0]->PRINCIPAL_ID)->get();
+        $orguser = Orgusers::where('ORG_UA_ID','=',$principal[0]->PRINCIPAL_ID)->get();
+        $tbuser = Musers::where('id','=',$orguser[0]->UA_ID)->get();
+        $tp='BRAND';
+        $principalbrand = Db::table('principal_brand')
+                            ->join('brand','brand.BRAND_CODE','=','principal_brand.BRAND_CODE')
+                            ->get();
+       $brand = Db::table('brand')->get();
+        
+                        $this->data = array(
+			'pageTitle'	=> 'Edit Principal',
+			'pageNote'	=> '',
+			'pageModule'=> 'principal',
+			'return'	=> self::returnUrl(),
+                        'principal' =>  $principal,
+                        'principalclass' =>  $principalclass,
+                        'city' =>  $city,
+                        'state' =>  $state,
+                        'country' =>  $country,
+                        'organization' =>  $organization,
+                        'orguser' =>  $orguser,
+                        'tbuser' =>  $tbuser,
+                        'tp'=>$tp,
+                        'principalbrand' => $principalbrand,       
+                        'brand' => $brand
+		);
+        
+                return View('principal.edit',$this->data);
+    }
+   
+   
+   
         
    public function store( Request $request) {
         $rules = array(
