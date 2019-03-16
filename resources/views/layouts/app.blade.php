@@ -31,6 +31,10 @@
                 <link href="{{ asset('sximo/css/sximo.css')}}" rel="stylesheet">
                    <link href="{{ asset('sximo/css/status.css')}}" rel="stylesheet">
   <link href="{{ asset('sximo/tappifications.css')}}" rel="stylesheet">
+  <!--//datatable -->
+    <link href="{{ asset('sximo/dt/css/jquery.dataTables.min.css')}}" rel="stylesheet">
+      <link href="{{ asset('sximo/dt/css/buttons.dataTables.min.css')}}" rel="stylesheet">
+
 	
 		<script type="text/javascript" src="{{ asset('sximo/js/plugins/jquery-1.12.3.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('sximo/js/plugins/jquery.cookie.js') }}"></script>			
@@ -57,9 +61,16 @@
       	 <script type="text/javascript" src="{{ asset('sximo/tappifications.js') }}"></script>
         <script type="text/javascript" src="{{ asset('sximo/tappifications.js') }}"></script>
          <script type="text/javascript" src="{{ asset('explugins/js/jquery.validate.min.js') }}"></script>
- 
-	
-		
+ 	<!--//datatable -->
+	 <script type="text/javascript" src="{{ asset('sximo/dt/js/jquery.dataTables.js') }}"></script>
+          <script type="text/javascript" src="{{ asset('sximo/dt/js/jquery.dataTables.min.js') }}"></script>
+      	<!--     <script type="text/javascript" src="{{ asset('sximo/dt/js/buttons.flash.min.js') }}"></script>-->
+            <script type="text/javascript" src="{{ asset('sximo/dt/js/jszip.min.js') }}"></script>
+             <script type="text/javascript" src="{{ asset('sximo/dt/js/pdfmake.min.js') }}"></script>
+              <script type="text/javascript" src="{{ asset('sximo/dt/js/buttons.html5.min.js') }}"></script>
+               <script type="text/javascript" src="{{ asset('sximo/dt/js/buttons.print.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('sximo/dt/js/dataTables.fixedColumns.min.js') }}"></script>
+
 		<!--[if lt IE 9]>
 			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -195,5 +206,45 @@ jQuery(document).ready(function ($) {
    });
 
 </script>
+<script>
+
+   $(document).ready(function() {
+   $("#show_popup").click(function(e) {
+       $(".pop-up").toggle();
+       e.stopPropagation();
+   });
+
+//    $(document).click(function(e) {
+//        if (!$(e.target).is('.pop-up, .pop-up *')) {
+//            $(".pop-up").hide(700);
+//        }
+//    });
+
+   $(".pop-hide").click(function() {
+       $(".pop-up").hide();
+   });
+});
+</script>
+
+<script>
+
+$(document).ready(function(){
+resizeDiv();
+});
+
+window.onresize = function(event) {
+resizeDiv();
+}
+
+function resizeDiv() {
+ vpw = $(window).innerWidth();
+ vph = $(window).innerHeight();
+
+ $('#page-wrapper').css({'min-height': vph + 'px'});
+ $('.sbox-content').css({'min-height': vph-180 + 'px'});
+}
+
+</script>
+
 </body> 
 </html>
