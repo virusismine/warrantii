@@ -16,7 +16,18 @@
 
 
 
-
+.pop_up_box {
+    position: absolute;
+    top: 113px;
+    right: 71px;
+    width: 346px;
+    background-color: #fefefe;
+    padding: 10px;
+    z-index: 999;
+    display: none;
+    border: 1px solid #c5c5c5;
+    box-shadow: 0 0 1px #000;
+}
 
 .icon-btn {
    display: inline-block;
@@ -1116,10 +1127,15 @@ body.body-small .footer.fixed {
   border-top: 1px solid #e8edf1;
   line-height: 1.42857;
   padding: 3px 8px;
-  font-size:11px;
-  
+  font-size:12px;
+
   vertical-align: top; 
 }
+
+.table > thead > tr > th{
+      text-align: center;
+}
+
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th
 {
  background: #ecf0f2;   
@@ -2030,7 +2046,7 @@ fieldset legend { font-size:16px; padding:10px 0; font-weight:500;}
 .toolbar { margin:10px 0; clear:both; text-align:right;}
 .toolbar-line { margin:15px 0; clear:both; }
 .page-content-wrapper { padding:0 15px;}
-.page-content { margin-bottom:25px;}
+/*.page-content { margin-bottom:25px;}*/
 .ribon-sximo { margin:20px 0;}
 .ribon-sximo a{ color: #fff;}
 .ribon-sximo .ribon-module { background: #0090d9; color: #fff; height: 110px;}

@@ -8,4 +8,10 @@
                     Route::resource('orgusers', 'OrgusersController');
                     Route::resource('musers', 'MusersController');
                     Route::resource('insurer', 'InsurerController');
+                    
+                    
+                    
+                    
+                    
+                  
                     ?>
