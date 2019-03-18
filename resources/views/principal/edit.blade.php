@@ -5,7 +5,7 @@
 <div class="page-content-wrapper">
     <ul class="parsley-error-list">
 			@foreach($errors->all() as $error)
-				<li>{{ $error }}</li>
+				<li>{{$error }}</li>
 			@endforeach
 		</ul>
 <div class="sbox animated fadeInRight">
@@ -13,9 +13,9 @@
 	
                    <div class="page-title half-div">
      
-        <a href="{{ URL::to('principal') }}" class="tips icon-btn create-page" title="Cancel"><img src="{{ asset('sximo/images/icons/back.png')}}"/></a>
-    <a class="tips icon-btn create-page" title="Save" onclick="page_submit()"><img src="{{ asset('sximo/images/icons/save.png')}}" /></a>
-    <a onclick="window.location.reload()" class="tips icon-btn create-page" title="Reset"><img src="{{ asset('sximo/images/icons/reset.png')}}" /></a>
+        <a href="{{URL::to('principal') }}" class="tips icon-btn create-page" title="Cancel"><img src="{{asset('sximo/images/icons/back.png')}}"/></a>
+    <a class="tips icon-btn create-page" title="Save" onclick="page_submit()"><img src="{{asset('sximo/images/icons/save.png')}}" /></a>
+    <a onclick="window.location.reload()" class="tips icon-btn create-page" title="Reset"><img src="{{asset('sximo/images/icons/reset.png')}}" /></a>
      </div>
 	</div>
 
@@ -42,7 +42,7 @@ span .help-inline {display: none !important;}
   </style>
             <div class="sbox-content"> 
       
-  {!! Form::open(array('route'=>'principal.store', 'class'=>'form-horizontal','id'=>'resource1' ,'files' => true ,'enctype'=>'multipart/form-data','novalidate'=>' ')) !!}
+  {!! Form::model($principal,array('route' => array('principal.update', $principal[0]->PRINCIPAL_ID),'class'=>'form-horizontal','id'=>'resource1', 'method'=>'PUT','files' => true ,'novalidate'=>' ')) !!}      
 
   
     <legend> Principal Details </legend>
@@ -50,6 +50,7 @@ span .help-inline {display: none !important;}
     <div class="" style="background-color:white; margin-top:12px">
      
       <div class="tabbable tabbable-custom">
+                    <input type="hidden" class="form-control PRINCIPAL_ID" id="PRINCIPAL_ID" name="PRINCIPAL_ID" value="{{$principal[0]->PRINCIPAL_ID}}">
 
         <ul class="nav nav-tabs cls" style="">
           <li class="active"><a href="#tab_1_4" id="tab3" data-toggle="tab">Organization</a></l> 
@@ -68,42 +69,42 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="first_name" class=" control-label text-left"> First Name </label>
-                    {!! Form::text('first_name', Input::old('first_name'),array('class'=>'form-control first_name', 'placeholder'=>'','required'=>'','pattern'=>'[a-zA-Z ]{2,}', 'title'=>'Enter only alphabets')) !!}
+                    <input type="text" class="form-control first_name" id="first_name" name="first_name" value="{{$tbuser[0]->first_name}}" required="" pattern='[a-zA-Z ]{2,}' title='Enter name only alphabets'>
                   </div> 
                 </div>
                   
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="middle_name" class=" control-label text-left"> Middle Name </label>
-                    {!! Form::text('middle_name', Input::old('middle_name'),array('class'=>'form-control middle_name', 'placeholder'=>'')) !!} 
+                    <input type="text" class="form-control middle_name" id="middle_name" name="middle_name" value="{{$tbuser[0]->middle_name}}">
                   </div> 
                 </div>
                   
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="last_name" class=" control-label text-left"> Last Name </label>
-                    {!! Form::text('last_name', Input::old('last_name'),array('class'=>'form-control last_name', 'placeholder'=>'')) !!} 
+                     <input type="text" class="form-control last_name" id="last_name" name="last_name" value="{{$tbuser[0]->last_name}}">
                   </div> 
                 </div>
                   
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="dob" class=" control-label text-left"> Date Of Birth </label>
-                    {!! Form::text('dob', Input::old('dob'),array('class'=>'form-control dob','id'=>'dob', 'placeholder'=>'','readonly' )) !!} 
+                    <input type="text" class="form-control dob" id="dob" name="dob" value="{{$tbuser[0]->dob}}" required="" readonly="">
                   </div> 
                 </div>
                   
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="gender" class=" control-label text-left"> Gender </label>
-                    {!! Form::select('gender', array(''=>'Select', 'M'=>'Male','F'=>'Female'),Input::old('gender'),array('class' => 'form-control gender','required')) !!} 
+                 {!!Form::select('gender', array(''=>'Select', 'M'=>'Male','F'=>'Female'),array('value'=>$tbuser[0]->gender),array('class' => 'form-control gender','required')) !!}
                   </div> 
                 </div>
                   
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="marital_status" class=" control-label text-left"> Marital Status </label>
-                    {!! Form::select('marital_status', array(''=>'Select', 'M'=>'Married','U'=>'Unmarried'),Input::old('marital_status'),array('class' => 'form-control marital_status','required')) !!} 
+                    {!!Form::select('marital_status', array(''=>'Select', 'M'=>'Married','U'=>'Unmarried'),array('value'=>$tbuser[0]->marital_status),array('class' => 'form-control marital_status','required')) !!}
                   </div> 
                 </div>
 
@@ -114,35 +115,30 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="email" class=" control-label text-left"> Email </label>
-                    {!! Form::text('email', Input::old('email'),array('class'=>'form-control email', 'placeholder'=>'','required' , 'pattern'=>'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$', 'title'=>'Enter valid email address')) !!} 
+                     <input type="text" class="form-control email" id="email" name="email" value="{{$tbuser[0]->email}}" pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
                   </div> 
                 </div>
                   
-                <div class="form-group">
-                  <div class="col-md-12">
-                    <label for="password" class=" control-label text-left"> Password </label> 
-                    {!! Form::text('password', Input::old('password'), array('class' => 'form-control','id'=>'password','required','pattern'=>'.{8,}', 'title'=>'Password must be minimum 8 charactors')) !!}
-                  </div> 
-                </div>
+
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="addr_house_no" class=" control-label text-left"> House No </label>
-                    {!! Form::text('addr_house_no', Input::old('addr_house_no'),array('class'=>'form-control addr_house_no', 'placeholder'=>'')) !!} 
+                      <input type="text" class="form-control addr_house_no" id="addr_house_no" name="addr_house_no" value="{{$tbuser[0]->addr_house_no}}">
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="addr_pin" class=" control-label text-left"> Pin Code </label>
-                    {!! Form::text('addr_pin', Input::old('addr_pin'),array('class'=>'form-control addr_pin', 'placeholder'=>'','required','maxlength'=>'6' ,'pattern'=>'[0-9]{6,6}','title'=>'Enter a valid pincode')) !!} 
+                    <input type="text" class="form-control addr_pin" id="addr_pin" name="addr_pin" value="{{$tbuser[0]->addr_pin}}" required="" maxlength="6" pattern="[0-9]{6,6}" title="Enter valid pincode">
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="phone_mobile" class=" control-label text-left"> Mobile </label>
-                    {!! Form::text('phone_mobile', Input::old('phone_mobile'),array('class'=>'form-control phone_mobile', 'placeholder'=>'','required' ,'maxlength'=>'10' ,'pattern'=>'[0-9]{10,10}','title'=>'Enter a valid mobile number' )) !!} 
+                      <input type="text" class="form-control phone_mobile" id="phone_mobile" name="phone_mobile" value="{{$tbuser[0]->phone_mobile}}" maxlength="10" pattern="[0-9]{10,10}" title="Enter a valid mobile number" required="" >
                   </div> 
                 </div>
               </div>
@@ -151,7 +147,7 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="addr_locality" class=" control-label text-left"> Locality </label>
-                    {!! Form::text('addr_locality', Input::old('addr_locality'),array('class'=>'form-control addr_locality', 'placeholder'=>'')) !!} 
+                     <input type="text" class="form-control addr_locality" id="addr_locality" name="addr_locality" value="{{$tbuser[0]->addr_locality}}">
                   </div> 
                 </div>
 
@@ -160,21 +156,21 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="addr_district" class=" control-label text-left"> District </label>
-                    {!! Form::text('addr_district', Input::old('addr_district'),array('class'=>'form-control addr_district', 'placeholder'=>'')) !!} 
+                    <input type="text" class="form-control addr_district" id="addr_district" name="addr_district" value="{{$tbuser[0]->addr_district}}" >
                   </div> 
                 </div>
                   
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="addr_citovi" class=" control-label text-left"> City </label>
-                    {!! Form::select('addr_citovi',array(''=>'Select City')+$city,  Input::old('addr_citovi'), array('class' => 'form-control addr_citovi','id'=>'addr_citovi','required')) !!}
+                    {!!Form::select('addr_citovi',array(''=>'Select')+$city,array('value'=>$tbuser[0]->addr_citovi), array('class' => 'form-control addr_citovi','id'=>'addr_citovi','required')) !!}
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="addr_state" class=" control-label text-left"> State </label>
-                    {!! Form::select('addr_state',array(''=>'Select State')+$state,  Input::old('addr_state'), array('class' => 'form-control addr_state','id'=>'addr_state','required')) !!}
+                    {!!Form::select('addr_state',array(''=>'Select')+$state,array('value'=>$tbuser[0]->addr_state), array('class' => 'form-control addr_state','id'=>'addr_state','required')) !!}
                   </div> 
                 </div>
 
@@ -186,28 +182,29 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ACCESS_TYPE" class=" control-label text-left"> Access Type </label>
-                    {!! Form::select('ACCESS_TYPE', array(''=>'Select', 'U'=>'User','M'=>'Manager'),Input::old('ACCESS_TYPE'),array('class' => 'form-control ACCESS_TYPE','required','required')) !!} 
+               {!!Form::select('ACCESS_TYPE', array(''=>'Select', 'M'=>'Married','U'=>'Unmarried'),array('value'=>$orguser[0]->ACCESS_TYPE),array('class' => 'form-control ACCESS_TYPE','required')) !!}
+
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="USER_CODE" class=" control-label text-left"> User Code </label>
-                    {!! Form::text('USER_CODE', Input::old('USER_CODE'),array('class'=>'form-control USER_CODE', 'placeholder'=>'','required','maxlength'=>'20' ,'pattern'=>'^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$','title'=>'Enter only alphabet and numeric' )) !!} 
+                    <input type="text" class="form-control USER_CODE" id="USER_CODE" name="USER_CODE" value="{{$orguser[0]->USER_CODE}}" required="" maxlength='20' pattern="^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$" title='Enter code in Capital and Numeric'>
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="DEPARTMENT" class=" control-label text-left"> Department </label>
-                    {!! Form::select('DEPARTMENT', array('IS'=>'IT System'),Input::old('DEPARTMENT'),array('class' => 'form-control DEPARTMENT','required' )) !!} 
+                    {!!Form::select('DEPARTMENT', array('IS'=>'IT System'),array('value'=>$orguser[0]->DEPARTMENT),array('class' => 'form-control DEPARTMENT' ,'required')) !!}
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="COUNTRY_CODE" class=" control-label text-left"> Country Code </label>
-                    {!! Form::select('COUNTRY_CODE',array('99'=>'India')+$country,  Input::old('COUNTRY_CODE'), array('class' => 'form-control COUNTRY_CODE','id'=>'COUNTRY_CODE','required')) !!}
+                    {!!Form::select('COUNTRY_CODE',array('0'=>'Select')+$country,array('value'=>$orguser[0]->COUNTRY_CODE), array('class' => 'form-control COUNTRY_CODE','id'=>'COUNTRY_CODE','required')) !!}
                   </div> 
                 </div>  
 
@@ -230,11 +227,11 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_TYPE" class=" control-label text-left"> Type </label>
-                    {!! Form::select('ORG_TYPE', array(''=>'Select', 'PVT'=>'Private Limited','PL'=>'Public Limited','LLP'=>'Limited liability partnership','PROP'=>'Proprietor'),Input::old('ORG_TYPE'),array('class' => 'form-control ORG_TYPE','required', 'title'=>'Please select type')) !!}
+                    {!!Form::select('ORG_TYPE', array(''=>'Select', 'PVT'=>'Private Limited','PL'=>'Public Limited','LLP'=>'Limited liability partnership','PROP'=>'Proprietor'),array('value'=>$organization[0]->ORG_TYPE),array('class' => 'form-control ORG_TYPE','required')) !!}
 <!--                    <div class="hints">
-                        <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{ asset('sximo/images/next-page.png')}}" /></a> 
-                        <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{ asset('sximo/images/question.png')}}" /></a>
-                        <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{ asset('sximo/images/search.png')}}" /></a>
+                        <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{asset('sximo/images/next-page.png')}}" /></a> 
+                        <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{asset('sximo/images/question.png')}}" /></a>
+                        <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{asset('sximo/images/search.png')}}" /></a>
                     </div>-->
                   </div> 
                 </div> 
@@ -242,44 +239,23 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_NAME" class=" control-label text-left">Legal Name </label>
-                    {!! Form::text('ORG_NAME', Input::old('ORG_NAME'),array('class'=>'form-control ORG_NAME', 'placeholder'=>'','required'=>'','pattern'=>'[a-zA-Z ]{2,}', 'title'=>'Enter name only alphabet')) !!} 
+                 <input type="text" class="form-control ORG_NAME" id="ORG_NAME" name="ORG_NAME" value="{{$organization[0]->ORG_NAME}}" required="" pattern='[a-zA-Z ]{2,}' title='Enter name only alphabets'>
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_CODE" class=" control-label text-left">Legal Code </label>
-                    {!! Form::text('ORG_CODE', Input::old('ORG_CODE'),array('class'=>'form-control ORG_CODE', 'placeholder'=>'','required','maxlength'=>'20' ,'pattern'=>'^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$','title'=>'Enter code in Capital and Numeric')) !!} 
-                  </div> 
-                </div>
-    <div class="form-group">
-                  <div class="col-md-12">
-                      @if($tp == 'BRAND')
-                    <label for="ORG_NAME" class=" control-label text-left">Brand Name </label>
-                    @else
-                     <label for="ORG_NAME" class=" control-label text-left">Insurer Name </label>
-                    @endif
-                    {!! Form::text('ORG_NAME1', Input::old('ORG_NAME1'),array('class'=>'form-control ORG_NAME1', 'placeholder'=>'','required'=>'','pattern'=>'[a-zA-Z ]{2,}', 'title'=>'Enter name only alphabet')) !!} 
+                     <input type="text" class="form-control ORG_CODE" id="ORG_CODE" name="ORG_CODE" value="{{$organization[0]->ORG_CODE}}" required="" maxlength='20' pattern="^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$" title='Enter code in Capital and Numeric' >
                   </div> 
                 </div>
 
-                <div class="form-group">
-                  <div class="col-md-12">
-                       @if($tp == 'BRAND')
-                     <label for="ORG_CODE" class=" control-label text-left">Brand Code </label>
-                    @else
-                    <label for="ORG_CODE" class=" control-label text-left">Insurer Code </label>
-                    @endif
-                  
-                    {!! Form::text('ORG_CODE1', Input::old('ORG_CODE1'),array('class'=>'form-control ORG_CODE1', 'placeholder'=>'','required','maxlength'=>'20' ,'pattern'=>'^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$','title'=>'Enter code in Capital and Numeric')) !!} 
-                  </div> 
-                </div>
                   
                   
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_EMAIL_ADDRESS" class=" control-label text-left"> Email </label>
-                    {!! Form::text('ORG_EMAIL_ADDRESS', Input::old('ORG_EMAIL_ADDRESS'),array('class'=>'form-control ORG_EMAIL_ADDRESS', 'placeholder'=>'','required', 'pattern'=>'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$', 'title'=>'Enter valid email address')) !!} 
+                    <input type="text" class="form-control ORG_EMAIL_ADDRESS" id="ORG_EMAIL_ADDRESS" name="ORG_EMAIL_ADDRESS" value="{{$organization[0]->ORG_EMAIL_ADDRESS}}" pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="">
                   </div> 
                 </div>
 
@@ -293,20 +269,20 @@ span .help-inline {display: none !important;}
 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_PHONE_MOBILE" class=" control-label text-left"> Mobile </label>
-                    {!! Form::text('ORG_PHONE_MOBILE', Input::old('ORG_PHONE_MOBILE'),array('class'=>'form-control ORG_PHONE_MOBILE', 'placeholder'=>'','required','maxlength'=>'10' ,'pattern'=>'[0-9]{10,10}','title'=>'Enter a valid mobile number' )) !!} 
+                        <input type="text" class="form-control ORG_PHONE_MOBILE" id="ORG_PHONE_MOBILE" name="ORG_PHONE_MOBILE" value="{{$organization[0]->ORG_PHONE_MOBILE}}" maxlength = "10" pattern="[0-9]{10,10}" title = "enter a valid mobile number" required="">
                   </div> 
                 </div>
                   
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_HOUSE_NO" class=" control-label text-left"> House No </label>
-                    {!! Form::text('ORG_ADDR_HOUSE_NO', Input::old('ORG_ADDR_HOUSE_NO'),array('class'=>'form-control', 'placeholder'=>'')) !!} 
+                    <input type="text" class="form-control ORG_ADDR_HOUSE_NO" id="ORG_ADDR_HOUSE_NO" name="ORG_ADDR_HOUSE_NO" value="{{$organization[0]->ORG_ADDR_HOUSE_NO}}" >
                   </div> 
                 </div>
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_DIST" class=" control-label text-left"> Address </label>
-                    {!! Form::text('ORG_ADDR_DIST', Input::old('ORG_ADDR_DIST'),array('class'=>'form-control ORG_ADDR_DIST', 'placeholder'=>'')) !!} 
+                    <input type="text" class="form-control ORG_ADDR_DIST" id="ORG_ADDR_DIST" name="ORG_ADDR_DIST" value="{{$organization[0]->ORG_ADDR_DIST}}" >
                   </div> 
                 </div>
 
@@ -315,7 +291,7 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_DIST" class=" control-label text-left"> District </label>
-                    {!! Form::text('ORG_ADDR_DIST', Input::old('ORG_ADDR_DIST'),array('class'=>'form-control ORG_ADDR_DIST', 'placeholder'=>'')) !!} 
+                    <input type="text" class="form-control ORG_ADDR_DIST" id="ORG_ADDR_DIST" name="ORG_ADDR_DIST" value="{{$organization[0]->ORG_ADDR_DIST}}">
                   </div> 
                 </div>
 
@@ -325,14 +301,14 @@ span .help-inline {display: none !important;}
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_LOCALITY" class=" control-label text-left"> Locality </label>
-                    {!! Form::text('ORG_ADDR_LOCALITY', Input::old('ORG_ADDR_LOCALITY'),array('class'=>'form-control ORG_ADDR_LOCALITY', 'placeholder'=>'')) !!} 
+                      <input type="text" class="form-control ORG_ADDR_LOCALITY" id="ORG_ADDR_LOCALITY" name="ORG_ADDR_LOCALITY" value="{{$organization[0]->ORG_ADDR_LOCALITY}}">
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_PIN" class=" control-label text-left"> Pin Code </label>
-                    {!! Form::text('ORG_ADDR_PIN', Input::old('ORG_ADDR_PIN'),array('class'=>'form-control ORG_ADDR_PIN', 'placeholder'=>'','required', 'maxlength'=>'6' ,'pattern'=>'[0-9]{6,6}','title'=>'Enter a valid pincode')) !!} 
+                      <input type="text" class="form-control ORG_ADDR_PIN" id="ORG_ADDR_PIN" name="ORG_ADDR_PIN" value="{{$organization[0]->ORG_ADDR_PIN}}" required="" maxlength='6' pattern='[0-9]{6,6}' title='Enter a valid pincode'>
                   </div> 
                 </div>
                   
@@ -348,33 +324,33 @@ span .help-inline {display: none !important;}
                    <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_CITYOVI" class=" control-label text-left"> City </label>
-                    {!! Form::select('ORG_ADDR_CITYOVI',array(''=>'Select City')+$city,  Input::old('ORG_ADDR_CITYOVI'), array('class' => 'form-control ORG_ADDR_CITYOVI', 'id'=>'ORG_ADDR_CITYOVI', 'required'=>'', 'title'=>'Please select city' )) !!}
+                    {!!Form::select('ORG_ADDR_CITYOVI',array(''=>'Select')+$city,array('value'=>$organization[0]->ORG_ADDR_CITYOVI), array('class' => 'form-control ORG_ADDR_CITYOVI','id'=>'ORG_ADDR_CITYOVI','required')) !!}
                   </div> 
                 </div>
  <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_STATE" class=" control-label text-left"> State </label>
-                    {!! Form::select('ORG_ADDR_STATE',array(''=>'Select State')+$state,  Input::old('ORG_ADDR_STATE'), array('class' => 'form-control ORG_ADDR_STATE','id'=>'ORG_ADDR_STATE','required'=>'', 'title'=>'Please select state' )) !!}
+                    {!!Form::select('ORG_ADDR_STATE',array(''=>'Select')+$state,array('value'=>$organization[0]->ORG_ADDR_STATE), array('class' => 'form-control ORG_ADDR_STATE','id'=>'ORG_ADDR_STATE','required')) !!}
                   </div> 
                 </div>
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="ORG_ADDR_COUNTRY" class=" control-label text-left"> Country </label>
-                    {!! Form::select('ORG_ADDR_COUNTRY',array('99'=>'India')+$country,  Input::old('ORG_ADDR_COUNTRY'), array('class' => 'form-control ORG_ADDR_COUNTRY','id'=>'ORG_ADDR_COUNTRY','required')) !!}
+                     {!!Form::select('ORG_ADDR_COUNTRY',array('0'=>'Select')+$country,array('value'=>$organization[0]->ORG_ADDR_COUNTRY), array('class' => 'form-control ORG_ADDR_COUNTRY','id'=>'ORG_ADDR_COUNTRY','required')) !!}
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
                     <label for="LOCATION_CODE" class=" control-label text-left"> Location Code </label>
-                   {!! Form::text('LOCATION_CODE', Input::old('LOCATION_CODE'),array('class'=>'form-control LOCATION_CODE', 'placeholder'=>'','required','maxlength'=>'20' ,'pattern'=>'^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$','title'=>'Enter code in Capital and Numeric')) !!} 
+                    <input type="text" class="form-control LOCATION_CODE" id="LOCATION_CODE" name="LOCATION_CODE" value="{{$orguser[0]->LOCATION_CODE}}" required="" maxlength="20" pattern ='^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$' title = "Enter code in Capital and Numeric" disabled="">
                   </div> 
                 </div>
 
                 <div class="form-group">
                   <div class="col-md-12">
-                    <label for="PC_CODE" class=" control-label text-left"> Class Code </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{ asset('sximo/images/question.png')}}" /></a>
-                    <input class="form-control PC_CODE" name="PC_CODE" id="PC_CODE" value="" required="">
+             <label for="PC_CODE" class=" control-label text-left"> Class Code </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{asset('sximo/images/question.png')}}" /></a>
+                    <input type="text" class="form-control PC_CODE" id="PC_CODE" name="PC_CODE" value="{{$principalclass[0]->PC_CODE}}" required="" maxlength="20" pattern="^(?=.*[A-Z]{1,})[A-Z\d]{2,20}$" title = "Enter code in Capital and Numeric" readonly="">
                     <div class="hints">                    
                       
                     </div>
@@ -383,8 +359,8 @@ span .help-inline {display: none !important;}
 
                 <div class="form-group">
                   <div class="col-md-12">
-                    <label for="PC_NAME" class=" control-label text-left"> Class Name </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{ asset('sximo/images/question.png')}}" /></a>
-                    <input class="form-control PC_NAME" name="PC_NAME" id="PC_NAME" value="" required="">
+                    <label for="PC_NAME" class=" control-label text-left"> Class Name </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{asset('sximo/images/question.png')}}" /></a>
+                     <input type="text" class="form-control PC_NAME" id="PC_NAME" name="PC_NAME" value="{{$principalclass[0]->PC_NAME}}" required="" pattern='[a-zA-Z ]{2,}' title='Enter name only alphabets' readonly="">
                     
                   </div> 
                 </div>
@@ -403,8 +379,8 @@ span .help-inline {display: none !important;}
                 </div>
                 <div class="form-group">
                     <div class="col-md-12" id="collaboration">
-                    <label for="ORDER_COLLABORATION" class=" control-label text-left"> Order Collaboration </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{ asset('sximo/images/question.png')}}" /></a><br>
-                    <input type="checkbox" id="ORDER_COLLABORATION" name="ORDER_COLLABORATION" class="ORDER_COLLABORATION" required="" title="Please check" >                 
+                    <label for="ORDER_COLLABORATION" class=" control-label text-left"> Order Collaboration </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{asset('sximo/images/question.png')}}" /></a><br>
+                  {!!Form::select('ORDER_COLLABORATION', array(''=>'Select', 'T'=>'TRUE','F'=>'FALSE'),Input::old('ORDER_COLLABORATION'),array('class' => 'form-control ORDER_COLLABORATION','required')) !!} 
                                      
                        
                   
@@ -414,9 +390,9 @@ span .help-inline {display: none !important;}
 
                 <div class="form-group">
                     <div class="col-md-12" id="check-req">
-                    <label for="PRODUCT_TRACING" class=" control-label text-left">  Product Tracing </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{ asset('sximo/images/question.png')}}" /></a>
+                    <label for="PRODUCT_TRACING" class=" control-label text-left">  Product Tracing </label>  <a class="tips field-hint" data-toggle="control-sidebar"><img src="{{asset('sximo/images/question.png')}}" /></a>
                     <br>
-                    <input type="checkbox" id="PRODUCT_TRACING" name="PRODUCT_TRACING" class="PRODUCT_TRACING" required="" title="Please check" >
+                  {!!Form::select('PRODUCT_TRACING', array(''=>'Select', 'T'=>'TRUE','F'=>'FALSE'),Input::old('PRODUCT_TRACING'),array('class' => 'form-control PRODUCT_TRACING','required')) !!} 
                   
                     </div> 
                 </div>
@@ -446,18 +422,18 @@ span .help-inline {display: none !important;}
             <div class="col-md-4 col-sm-4 col-xs-4"> 
                  <div class="col-md-12">  
                    <div class="row">
-                    <table id="PRINCIPAL_BRAND" class="stripe row-border order-column" cellspacing="0" width="100%">
+                    <table cellspacing="0" width="100%">
                         <thead> 
                           <tr height="35" style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;">
-                            <th style="text-align:center;"></th>
-                            <th style="text-align:center;"> Brand Name </th>
+                            <th style="text-align:center;">Delete Brand</th>
+                            <th style="text-align:center;"> Principal Brand Name </th>
                           </tr>
                         </thead>
                         <tbody>
                @if(count($principalbrand)!=0)     
                @for($i=0;$i<count($principalbrand);$i++)
                     <tr> 
-                            <td align="center" width="80"> <input type="checkbox" name="LINE_ID" class="form-control LINE_ID" id="LINE_ID" checked ></td>
+                            <td align="center" width="80"> <input type="checkbox" class="ids1" name="id1[]"   value="{{$principalbrand[$i]->BRAND_CODE}}"></td>
                             <td><input  type="text"  class="form-control LINE_ID"  value="{{$principalbrand[$i]->BRAND_NAME}}" disabled=""></td>
                     </th>        
                @endfor    
@@ -472,24 +448,25 @@ span .help-inline {display: none !important;}
             
             <div class="col-md-12">  
                    <div class="row">
-                    <table id="PRINCIPAL_BRAND" class="stripe row-border order-column" cellspacing="0" width="100%">
+                    <table  width="100%" class="table table-striped diamond_table" id="diamond_table" cellpadding="0" cellspacing="0">
                         <thead> 
-                          <tr height="35" style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;">
-                            <th style="text-align:center;"></th>
-                            <th style="text-align:center;"> Brand Name </th>
+                          <tr style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;">
+                            <th>Add Brand</th>
+                            <th> All Brand Name List </th>
                           </tr>
                         </thead>
                         <tbody>
                @if(count($brand)!=0)     
                @for($i=0;$i<count($brand);$i++)
                     <tr> 
-                            <td> <input type="checkbox" name="BRAND_CODE" class="form-control BRAND_CODE" id="BRAND_CODE" value="{{$brand[$i]->BRAND_CODE}}" checked > </td>
+                            <td> <input type="checkbox" class="ids" name="id[]" value="{{$brand[$i]->BRAND_CODE}}"  > </td>
                             <td> <input  type="text"  class="form-control LINE_ID"  value="{{$brand[$i]->BRAND_NAME}}" disabled=""> </td>
                     </th>        
                @endfor    
                @endif    
-                   </tbody>
-                    </table>           
+                    </tbody>
+                    </table>
+                    
              
             </div> 
             </div> 
@@ -507,8 +484,7 @@ span .help-inline {display: none !important;}
           
           
           
-          <input type="hidden" value="2" name="count3" id="count3">
-          <input type="hidden" name="tableangle3" id="tableangle3">
+         
         </div>
 
 
@@ -519,8 +495,8 @@ span .help-inline {display: none !important;}
   <div class="col-md-12 btn-right-bottom" >  <br>
     <div class="form-group">
       <div class="col-sm-12" style="text-align: left; left:225px;">	
-        <input type="submit" name="submit" class="tips btn btn-sm  btn-primary align-right submit hidden" onclick="check_valid()" value="{{ Lang::get('core.sb_save') }}  " />
-        <!--<a href="{{ URL::to('principal') }}" class="tips btn btn-sm  btn-primary ">{{ Lang::get('core.sb_cancel') }}</a>-->
+        <input type="submit" name="submit" class="tips btn btn-sm  btn-primary align-right submit hidden" onclick="check_valid()" value="{!!Lang::get('core.sb_save') !!}  " />
+        <!--<a href="{!!URL::to('principal') !!}" class="tips btn btn-sm  btn-primary ">{!!Lang::get('core.sb_cancel') !!}</a>-->
       </div>	  
     </div> 
   </div>  
@@ -543,10 +519,6 @@ span .help-inline {display: none !important;}
 </script>    
 
 <script>
-
-    
-    
-    
     
     $(document).ready(function () {
         function setHeightx() {
@@ -592,8 +564,7 @@ var o_pin =$(".ORG_ADDR_PIN").val();
 var o_city =$(".ORG_ADDR_CITYOVI").val();
 var o_state =$(".ORG_ADDR_STATE").val();
 var o_locationcode =$(".LOCATION_CODE").val();
-var o_order_coll = $(".ORDER_COLLABORATION").is(":checked");
-var o_product_trace = $(".PRODUCT_TRACING").is(":checked");
+
 
 var a_first_name =$(".first_name").val();
 var a_gender =$(".gender").val();
@@ -721,16 +692,8 @@ else if(!o_locationcode.match(onlycode))
   return false;
 }
 
-else if(!o_order_coll)
-{
-  $.tappification({ type: 'danger', message: 'Please Check Organization Order Collaboration' });
-  return false;
-}
-else if(!o_product_trace)
-{
-  $.tappification({ type: 'danger', message: 'Please Check Organization Product Tracing' });
-  return false;
-}
+
+
 
 else if(a_first_name === "" )
 {
@@ -842,7 +805,7 @@ else if(!a_usercode.match(onlycode) )
 
 <script type="text/javascript">
 function page_submit(){
-//    alert("submit");
+    alert("submit");
      $('.submit').click();
 }
 
@@ -1035,33 +998,12 @@ function page_submit(){
                     
             submitHandler: function (form) {
 
-//                var TableData1;
-//                TableData1 = storeTblValues1();
-//                var TableDataw = JSON.stringify(TableData1);
-//// alert(TableDataw);
-//                $("[name='tableangle1']").val(TableDataw);  //.val get data or insert data in to table
-
                 form.submit();
             }
         });
     });
 
-//    function storeTblValues1()
-//    {
-//        TableData1 = new Array();  //each extends same as foreach function
-//        $('#contact tr').each(function (row, tr) {
-//            TableData1[row] = {
-//                "LINE_ID": $(tr).find('td:eq(0) .LINE_ID').val()
-//                , "PC_CODE": $(tr).find('td:eq(1) .PC_CODE').val()
-//                , "PC_NAME": $(tr).find('td:eq(2) .PC_NAME').val()
-//                , "PC_DESCRIPTION": $(tr).find('td:eq(3) .PC_DESCRIPTION').val()
-//                , "PC_LEVEL": $(tr).find('td:eq(4) .PC_LEVEL').val()
-//                , "INCENTIVIZE": $(tr).find('td:eq(5) .INCENTIVIZE').val()
-//            }
-//        });
-//        TableData1.shift(); // first row will be empty - so remove
-//        return TableData1;
-//    }
+
 
 </script>   
               

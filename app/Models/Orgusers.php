@@ -7,7 +7,7 @@ class orgusers extends Sximo  {
 	
 	protected $table = 'org_users';
 	protected $primaryKey = '';
-
+public $timestamps = false;
 	public function __construct() {
 		parent::__construct();
 		

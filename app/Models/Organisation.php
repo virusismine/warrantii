@@ -7,7 +7,7 @@ class organisation extends Sximo  {
 	
 	protected $table = 'organisation';
 	protected $primaryKey = '';
-
+public $timestamps = false;
 	public function __construct() {
 		parent::__construct();
 		
