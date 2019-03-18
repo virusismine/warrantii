@@ -45,7 +45,7 @@ class Post1Controller extends Controller {
                 $one =$i + $start + 1; 
                 $two = $resultx[$i]->BRAND_CODE;
                 $three =$resultx[$i]->BRAND_NAME;
-               $four=$resultx[$i]->STATUS;
+                $four=$resultx[$i]->STATUS;
                 
                   $progress[$i] = array('1' => $one,
                     '2' => $two,

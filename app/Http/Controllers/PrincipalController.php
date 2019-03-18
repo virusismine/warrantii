@@ -15,7 +15,7 @@ use App\Models\Principalclass;
 
 class PrincipalController extends Controller {
 
-<<<<<<< HEAD
+
     protected $layout = "layouts.main";
     protected $data = array();
     public $module = 'principal';
@@ -63,68 +63,8 @@ class PrincipalController extends Controller {
         return view('principal.create', $this->data);
     }
 
-    public function edit($id) {
-
-        $principal = Principal::where('PRINCIPAL_ID', '=', $id)->get();
-        $principalclass = DB::table('principal_class')->where('PRINCIPAL_ID', '=', $principal[0]->PRINCIPAL_ID)->get();
-        $city = DB::table('cities')->orderBy('city_name', 'ASC')->lists('city_name', 'city_id');
-        $state = DB::table('state_code_master')->lists('STATE_NAME', 'STATE_CODE_ID');
-        $country = DB::table('country_master')->lists('COUNTRY_NAME', 'COUNTRY_ID');
-        $organization = Organisation::where('ORG_UA_ID', '=', $principal[0]->PRINCIPAL_ID)->get();
-        $orguser = Orgusers::where('ORG_UA_ID', '=', $principal[0]->PRINCIPAL_ID)->get();
-        $tbuser = Musers::where('id', '=', $orguser[0]->UA_ID)->get();
-        $tp = 'BRAND';
-=======
-	protected $layout = "layouts.main";
-	protected $data = array();	
-	public $module = 'principal';
-	static $per_page	= '10';
-
-	public function __construct()
-	{
-		
-		$this->beforeFilter('csrf', array('on'=>'post'));
-		$this->model = new Principal();
-		$this->info = $this->model->makeInfo( $this->module);
-		$this->access = $this->model->validAccess($this->info['id']);
-	
-		$this->data = array(
-			'pageTitle'	=> 	$this->info['title'],
-			'pageNote'	=>  $this->info['note'],
-			'pageModule'=> 'principal',
-			'return'	=> self::returnUrl()
-			
-		);
-		\App::setLocale(CNF_LANG);
-		if (defined('CNF_MULTILANG') && CNF_MULTILANG == '1') {
-
-		$lang = (\Session::get('lang') != "" ? \Session::get('lang') : CNF_LANG);
-		\App::setLocale($lang);
-		}  
-
-		
-	}
-   public function create(){
-          $city = DB::table('cities')->orderBy('city_name','ASC')->lists('city_name','city_id'); 
-            $state = DB::table('state_code_master')->lists('STATE_NAME','STATE_CODE_ID');
-            $country = DB::table('country_master')->lists('COUNTRY_NAME','COUNTRY_ID');
-      $tp='BRAND';
-            
-          
-       
-       $this->data = array(
-			'pageTitle'	=> 	'Create Principal',
-			'pageNote'	=> '',
-			'pageModule'=> 'principal',
-			'return'	=> self::returnUrl(),
-           'city'=>$city,
-           'state'=>$state,
-           'country'=>$country,
-           'tp'=>$tp	
-			
-		);
-         return view('principal.create',$this->data );
-   }  
+   
+   
    
      public function show($id) {
                //  print_r($id);exit();
@@ -187,7 +127,7 @@ class PrincipalController extends Controller {
         $orguser = Orgusers::where('ORG_UA_ID','=',$principal[0]->PRINCIPAL_ID)->get();
         $tbuser = Musers::where('id','=',$orguser[0]->UA_ID)->get();
         $tp='BRAND';
->>>>>>> 82bd668d3ba8bae405cfbe86cadfe200695d8a61
+
         $principalbrand = Db::table('principal_brand')
                 ->join('brand', 'brand.BRAND_CODE', '=', 'principal_brand.BRAND_CODE')
                 ->where('PRINCIPAL_ID','=',$principal[0]->PRINCIPAL_ID)

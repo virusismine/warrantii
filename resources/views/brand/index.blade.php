@@ -346,8 +346,6 @@ table.dataTable thead th, table.dataTable tfoot th {
         //alert("in");
         $(".log").hide();
         $(".highlight").css("background", "transparent");
-
-
     });
 
 </script>
