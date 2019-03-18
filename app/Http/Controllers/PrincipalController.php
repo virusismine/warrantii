@@ -62,7 +62,57 @@ class PrincipalController extends Controller {
 			
 		);
          return view('principal.create',$this->data );
-   }    
+   }  
+   
+     public function show($id) {
+               //  print_r($id);exit();
+        $principal = Principal::where('PRINCIPAL_ID','=', $id)->get();
+        
+        $principalclass = DB::table('principal_class')
+                ->where('PRINCIPAL_ID','=', $principal[0]->PRINCIPAL_ID)->get();
+        
+       
+        $principalbrand = DB::table('principal_brand')
+                ->where('PRINCIPAL_ID','=', $principal[0]->PRINCIPAL_ID)->get();
+         
+        
+        
+        
+        $city = DB::table('cities')->orderBy('city_name','ASC')->lists('city_name','city_id'); 
+       
+        $state = DB::table('state_code_master')->lists('STATE_NAME','STATE_CODE_ID');
+        $country = DB::table('country_master')->lists('COUNTRY_NAME','COUNTRY_ID');
+        $organization = Organisation::where('ORG_UA_ID','=',$principal[0]->PRINCIPAL_ID)->get();
+        $orguser = Orgusers::where('ORG_UA_ID','=',$principal[0]->PRINCIPAL_ID)->get();
+        $tbuser = Musers::where('id','=',$orguser[0]->UA_ID)->get();
+       $accountname = Musers::where('id','=',$organization[0]->ORG_SUPERUSER)->get();   
+        $tp='BRAND';
+        $this->data = array(
+			'pageTitle'	=> 	'Show Principal',
+			'pageNote'	=> '',
+			'pageModule'=> 'principal',
+			'return'	=> self::returnUrl(),
+           'city'=>$city,
+           'state'=>$state,
+           'country'=>$country,
+            'organization'=>$organization,
+               'orguser'=>$orguser,
+               'tbuser'=>$tbuser,
+               'principalclass'=>$principalclass,
+               'principal'=>$principal,
+		 'tp'=>$tp,
+            'principalbrand'=>$principalbrand,
+            'accountname'=>$accountname
+		);
+        
+ //print_r($tbuser);exit();
+//         print_r($state);exit();
+              
+        return view('principal.show', $this->data);
+    }
+   
+   
+   
 
            public function edit($id) {
              

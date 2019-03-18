@@ -39,7 +39,7 @@ class PrincipalclassController extends Controller {
 		
 	}
 
-	public function getIndex( Request $request )
+	public function index( Request $request )
 	{
 		$sort = (!is_null($request->input('sort')) ? $request->input('sort') : ''); 
 		$order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');

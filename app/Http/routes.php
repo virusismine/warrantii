@@ -90,27 +90,4 @@ Route::group(['middleware' => 'auth' , 'middleware'=>'sximoauth'], function()
                   Route::resource('searchdelivery', 'Post1Controller@searchdelivery');
 });
 
-  Route::resource('allposts', 'Post1Controller@allposts');
-             Route::resource('searchcategory', 'Post1Controller@searchcategory');
-             Route::resource('searchprincipal', 'Post1Controller@searchprincipal');
-             Route::resource('searchprincipalclass', 'Post1Controller@searchprincipalclass');
-             Route::resource('searcheventtype', 'Post1Controller@searcheventtype');
-             Route::resource('searchevent', 'Post1Controller@searchevent');
-             Route::resource('searcheveattendee', 'Post1Controller@searcheveattendee');
-             Route::resource('searchregistration', 'Post1Controller@searchregistration');
-             Route::resource('searchcommonissue', 'Post1Controller@searchcommonissue');
-             Route::resource('searchvendor', 'Post1Controller@searchvendor');
-             Route::resource('searchtaxclass', 'Post1Controller@searchtaxclass');
-              Route::resource('searchtaxmaster', 'Post1Controller@searchtaxmaster');
-               Route::resource('searchhsnmaster', 'Post1Controller@searchhsnmaster');
-                Route::resource('searchprincipalpartner', 'Post1Controller@searchprincipalpartner');
-                 Route::resource('searchlocation', 'Post1Controller@searchlocation');
-             Route::resource('searchwarehouse', 'Post1Controller@searchwarehouse');
-             Route::resource('searchdiscountlist', 'Post1Controller@searchdiscountlist');
-                Route::resource('searchproductgroup', 'Post1Controller@searchproductgroup');
-                 Route::resource('searchproduct', 'Post1Controller@searchproduct');
-                 Route::resource('searchfinancialyear', 'Post1Controller@searchfinancialyear');
-                  Route::resource('searchdelivery', 'Post1Controller@searchdelivery');
-
-
-
+ 
