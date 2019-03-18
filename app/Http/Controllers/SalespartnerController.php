@@ -1,31 +1,31 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\controller;
-use App\Models\Orgusers;
+use App\Models\Salespartner;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ; 
 
 
-class OrgusersController extends Controller {
+class SalespartnerController extends Controller {
 
 	protected $layout = "layouts.main";
 	protected $data = array();	
-	public $module = 'orgusers';
+	public $module = 'salespartner';
 	static $per_page	= '10';
 
 	public function __construct()
 	{
 		
 		$this->beforeFilter('csrf', array('on'=>'post'));
-		$this->model = new Orgusers();
+		$this->model = new Salespartner();
 		$this->info = $this->model->makeInfo( $this->module);
 		$this->access = $this->model->validAccess($this->info['id']);
 	
 		$this->data = array(
 			'pageTitle'	=> 	$this->info['title'],
 			'pageNote'	=>  $this->info['note'],
-			'pageModule'=> 'orgusers',
+			'pageModule'=> 'salespartner',
 			'return'	=> self::returnUrl()
 			
 		);
@@ -63,7 +63,7 @@ class OrgusersController extends Controller {
 		// Build pagination setting
 		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
 		$pagination = new Paginator($results['rows'], $results['total'], $params['limit']);	
-		$pagination->setPath('orgusers');
+		$pagination->setPath('salespartner');
 		
 		$this->data['rowData']		= $results['rows'];
 		// Build Pagination 
@@ -83,7 +83,7 @@ class OrgusersController extends Controller {
 		// Master detail link if any 
 		$this->data['subgrid']	= (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array()); 
 		// Render into template
-		return view('orgusers.index',$this->data);
+		return view('salespartner.index',$this->data);
 	}	
 
 }

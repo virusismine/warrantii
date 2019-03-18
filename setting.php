@@ -1,5 +1,5 @@
 <?php 
-define('CNF_APPNAME','Warrantii - Save Your Invoice!!!');
+define('CNF_APPNAME','Warrantii - Save Your Invoice !!!  ');
 define('CNF_APPDESC','PHP Application Builder ');
 define('CNF_COMNAME','Warrantii');
 define('CNF_EMAIL','info@mycompanyname.com');
