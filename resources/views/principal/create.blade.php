@@ -466,7 +466,7 @@ span .help-inline {display: none !important;}
       </div>	  
     </div> 
   </div>  
-     <input type="text" name="page_type" id="page_type" value="{{$tp}}">
+     <input type="hidden" name="page_type" id="page_type" value="{{$tp}}">
     {!! Form::close() !!}
   </div> 
 

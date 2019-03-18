@@ -99,7 +99,7 @@
 	</div>	  
 </div>	
 <input type="hidden" id="length1" name="length1" value="20">
-
+<input type="hidden" id="page_type" name="page_type" value="BRAND">
 
 <style type="text/css">
     table.dataTable tbody td:nth-child(2), table.dataTable tbody td:nth-child(3)
@@ -394,6 +394,8 @@ var windowHeight = $(window).innerHeight();
                     },
                      length1: function () {
                         return $('#length1').val();
+                    }, page_type: function () {
+                        return $('#page_type').val();
                     }
                    
               
