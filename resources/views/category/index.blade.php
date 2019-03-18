@@ -52,7 +52,7 @@
             <div class="form-group">
             <label for="PARENT_CATEGORY_CODE" class=" control-label col-md-5 no-padding text-left">Parent Category Code</label>
             <div class="col-md-7 no-padding">
-               {{ Form::select('PARENT_CATEGORY_CODE', array(''=>'Select', 'P&T'=>'Phones & Tablets','C&O'=>'Cameras & Optics','C&H'=>'Computers & Peripherals','HMK'=>'Home & Kitchen Appliances','O'=>'Other'),Input::old('PARENT_CATEGORY_CODE'),array('class' => 'form-control PARENT_CATEGORY_CODE','id' => 'PARENT_CATEGORY_CODE', 'required')) }} 
+               {!! Form::select('PARENT_CATEGORY_CODE', array(''=>'Select', 'P&T'=>'Phones & Tablets','C&O'=>'Cameras & Optics','C&H'=>'Computers & Peripherals','HMK'=>'Home & Kitchen Appliances','O'=>'Other'),Input::old('PARENT_CATEGORY_CODE'),array('class' => 'form-control PARENT_CATEGORY_CODE','id' => 'PARENT_CATEGORY_CODE', 'required')) !!} 
             </div>
             </div>     
         </div>

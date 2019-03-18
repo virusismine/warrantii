@@ -13,11 +13,11 @@ class Post1Controller extends Controller {
     }
 
    
-    public function allPosts() {
+    public function allPosts(Request $request) {
 //        print_r("arun");exit();
 
 
-        if (Request::ajax()) {
+           if ($request->ajax()) {
             $progress = array();
 
             $BRAND_CODE = LTRIM(RTRIM(Input::get('BRAND_CODE')));
@@ -66,15 +66,15 @@ class Post1Controller extends Controller {
 //            return json_encode($json_data);
             
              return Response()->json($json_data);
-        }
+    }
     }
     
     
-        public function searchcategory() {
+        public function searchcategory(Request $request) {
 //        print_r("arun");exit();
 
 
-        if (Request::ajax()) {
+             if ($request->ajax()) {
             $progress = array();
 
             $CATEGORY_CODE = LTRIM(RTRIM(Input::get('CATEGORY_CODE')));
