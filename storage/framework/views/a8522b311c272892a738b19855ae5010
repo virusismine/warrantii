@@ -1,7 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
-{{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
+<?php $__env->startSection('content'); ?>
+<?php /**/ usort($tableGrid, "SiteHelpers::_sort") /**/ ?>
 <div class="page-content row">
 
 
@@ -9,22 +7,22 @@
 
     <div class="sbox animated fadeInRight">
       <div class="sbox-title">
-        <h3><i class="icon-bars"></i>  {{ $pageTitle }} <small>{{ $pageNote }}</small></h3>
+        <h3><i class="icon-bars"></i>  <?php echo e($pageTitle); ?> <small><?php echo e($pageNote); ?></small></h3>
 
         
         <div class="page-title half-div">
-<!--<h3> {{ $pageTitle }} <small>{{ $pageNote }}</small></h3>-->
-          <a href="#" class="tips icon-btn index-page" title="Summary"><img src="{{ asset('sximo/images/icons/summary.png')}}" /></a>
+<!--<h3> <?php echo e($pageTitle); ?> <small><?php echo e($pageNote); ?></small></h3>-->
+          <a href="#" class="tips icon-btn index-page" title="Summary"><img src="<?php echo e(asset('sximo/images/icons/summary.png')); ?>" /></a>
 
-          <a href="{{ URL::to('principalusers/create') }}" class="tips icon-btn index-page" title="Add"><img src="{{ asset('sximo/images/icons/add.png')}}" /></a>
+          <a href="<?php echo e(URL::to('principalusers/create')); ?>" class="tips icon-btn index-page" title="Add"><img src="<?php echo e(asset('sximo/images/icons/add.png')); ?>" /></a>
 
-          <a href="#" class="tips icon-btn index-page" title="Print"><img src="{{ asset('sximo/images/icons/print.png')}}" /></a>
-          <a href="#" class="tips icon-btn index-page" title="Info"><img src="{{ asset('sximo/images/icons/info.png')}}" /></a>
-          <a href="#" class="tips icon-btn index-page" title="Export"><img src="{{ asset('sximo/images/icons/export.png')}}" /></a>
+          <a href="#" class="tips icon-btn index-page" title="Print"><img src="<?php echo e(asset('sximo/images/icons/print.png')); ?>" /></a>
+          <a href="#" class="tips icon-btn index-page" title="Info"><img src="<?php echo e(asset('sximo/images/icons/info.png')); ?>" /></a>
+          <a href="#" class="tips icon-btn index-page" title="Export"><img src="<?php echo e(asset('sximo/images/icons/export.png')); ?>" /></a>
         </div>
         <div class="text-right half-div" style='    margin-top: -22px;'> 
-            <a id="show_popup" class="tips icon-btn index-page" title="Search"><img src="{{ asset('sximo/images/icons/filter.png')}}"/></a>
-            <a href="#" class="tips icon-btn index-page" title="Menu"><img src="{{ asset('sximo/images/icons/menu-button.png')}}" /></a>
+            <a id="show_popup" class="tips icon-btn index-page" title="Search"><img src="<?php echo e(asset('sximo/images/icons/filter.png')); ?>"/></a>
+            <a href="#" class="tips icon-btn index-page" title="Menu"><img src="<?php echo e(asset('sximo/images/icons/menu-button.png')); ?>" /></a>
         </div>
          <div class="pop-up pop_up_box">
         <div class="col-md-12 cln-padding"><button class="pop-hide right-x">&#10006;</button></div>
@@ -66,7 +64,7 @@
             <div class="form-group">
             <label for="STATUS" class=" control-label col-md-5 no-padding text-left">Status</label>
             <div class="col-md-7 no-padding">
-            {!! Form::select('STATUS', array(''=>'Select', 'N'=>'New','E'=>'Enabled','D'=>'Disabled'),Input::old('STATUS'),array('class' => 'form-control STATUS','id' => 'STATUS', 'required')) !!} 
+            <?php echo Form::select('STATUS', array(''=>'Select', 'N'=>'New','E'=>'Enabled','D'=>'Disabled'),Input::old('STATUS'),array('class' => 'form-control STATUS','id' => 'STATUS', 'required')); ?> 
             
             </div>
             </div>     
@@ -86,7 +84,8 @@
       <div class="sbox-content"> 	
 
 
-        {!! Form::open(array('url'=>'principalusers/delete/', 'class'=>'form-horizontal' ,'id' =>'SximoTable' )) !!}
+        <?php echo Form::open(array('url'=>'principalusers/delete/', 'class'=>'form-horizontal' ,'id' =>'SximoTable' )); ?>
+
         <div class="table-responsive" style="min-height:300px;">
            <table width="100%" class="table display cell-border diamond_table" id="diamond_table" cellpadding="0" cellspacing="0">
                 <thead>
@@ -104,7 +103,8 @@
             </table>
           <input type="hidden" name="md" value="" />
         </div>
-        {!! Form::close() !!}
+        <?php echo Form::close(); ?>
+
       
       </div>
     </div>	
@@ -406,7 +406,7 @@ var windowHeight = $(window).innerHeight();
 //            },
             "serverSide": true,
             "ajax": {
-                "url": "{{ url('searchPrincipalUsers') }}",
+                "url": "<?php echo e(url('searchPrincipalUsers')); ?>",
                 "dataType": "json",
                 "type": "POST",
                 "_token": $(this).find('input[name=_token]').val(),
@@ -511,4 +511,5 @@ var windowHeight = $(window).innerHeight();
 
 
 
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

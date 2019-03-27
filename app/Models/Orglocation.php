@@ -7,7 +7,7 @@ class orglocation extends Sximo  {
 	
 	protected $table = 'org_location';
 	protected $primaryKey = '';
-
+public $timestamps = false;
 	public function __construct() {
 		parent::__construct();
 		

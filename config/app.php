@@ -147,7 +147,8 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,  
-        Collective\Html\HtmlServiceProvider::class    
+        Collective\Html\HtmlServiceProvider::class,
+     //   Aws\Laravel\AwsServiceProvider::class,
 
     ],
 
@@ -201,7 +202,8 @@ return [
         'Captcha'   => Mews\Captcha\Facades\Captcha::class,
         'Socialize' => Laravel\Socialite\Facades\Socialite::class,
         'Markdown'  => GrahamCampbell\Markdown\Facades\Markdown::class,
-        'Socialize' => Laravel\Socialite\Facades\Socialite::class  
+        'Socialize' => Laravel\Socialite\Facades\Socialite::class,
+     //   'AWS' => Aws\Laravel\AwsFacade::class,
 
     ],
 

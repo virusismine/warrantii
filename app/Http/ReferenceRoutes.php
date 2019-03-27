@@ -17,7 +17,7 @@
                     Route::resource('servicepartner', 'ServicepartnerController'); 
                     
                     
-                
+                   Route::resource('orgloaction', 'OrgloactionController'); 
                     
                   
                     ?>

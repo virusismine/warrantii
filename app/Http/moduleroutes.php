@@ -15,4 +15,7 @@
                     Route::resource('principalproduct', 'PrincipalproductController');
                     Route::resource('salespartner', 'SalespartnerController');
                     Route::resource('servicepartner', 'ServicepartnerController'); 
+                      Route::resource('orgloaction', 'OrglocationController'); 
+                                      
+
                     ?>

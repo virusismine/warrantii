@@ -12,7 +12,159 @@ class Post1Controller extends Controller {
         parent::__construct();
     }
 
+          public function searchlocation(Request $request) {
+
+            if ($request->ajax()) {
+            $progress = array();
+
+            $LOCATION_CODE = LTRIM(RTRIM(Input::get('LOCATION_CODE')));
+            $LOCATION_NAME = LTRIM(RTRIM(Input::get('LOCATION_NAME')));
+            $LOCATION_TYPE = Input::get('LOCATION_TYPE');
+            $STATUS =Input::get('STATUS');
+            $limit = Input::get('length1');
+            $start = Input::get('start');
+             $IDS=\Session::get('pid');
+            
+            $_SUBQUERY = 'SELECT * FROM org_location WHERE ORG_UA_ID = ' . "'" . $IDS . "'" . '';  
+          
+            if($LOCATION_CODE != ''){
+               $_SUBQUERY=$_SUBQUERY.' AND LOCATION_CODE = ' . "'" . $LOCATION_CODE . "'" . ' '; 
+            }
+            
+            if($LOCATION_NAME != ''){
+               $_SUBQUERY=$_SUBQUERY.' AND LOCATION_NAME = ' . "'" . $LOCATION_NAME . "'" . ' '; 
+            }           
+            
+            if($LOCATION_TYPE != ''){
+               $_SUBQUERY=$_SUBQUERY.' AND LOCATION_TYPE = ' . "'" . $LOCATION_TYPE . "'" . ' '; 
+            } 
+            
+            if($STATUS != ''){
+               $_SUBQUERY=$_SUBQUERY.' AND STATUS = ' . "'" . $STATUS . "'" . ' '; 
+            } 
+            
+            $result_count = DB::select($_SUBQUERY);
+            $resultx = DB::select($_SUBQUERY." LIMIT $limit OFFSET $start");
+            $totalData = count($result_count);
+            $totalFiltered = $totalData;
+
+            for ($i = 0; $i < count($resultx); $i++){
+                $one   = $i + $start + 1; 
+                $two   = $resultx[$i]->LOCATION_CODE.','.$resultx[$i]->ORG_UA_ID;
+                $three = $resultx[$i]->LOCATION_NAME;
+                $four = $resultx[$i]->LOCATION_TYPE;
+                $five = $resultx[$i]->DOA;
+                $six = $resultx[$i]->STATUS;
+
+                
+                  $progress[$i] = array(
+                      '1' => $one,
+                      '2' => $two,
+                      '3' => $three,
+                      '4' => $four,
+                      '5' => $five,
+                      '6' => $six,
+                      );
+            }
+
+           $json_data = array(
+                "draw" => intval(Input::get('draw')),
+                "recordsTotal" => $totalData,
+                "recordsFiltered" => intval($totalFiltered),
+                "data" => $progress
+            );
+
+            return Response()->json($json_data);
+        }
+    }
+    
+    
+    
+    
    
+   public function searchPrincipalUsers(Request $request) {
+//        print_r("arun");exit();
+
+
+        if ($request->ajax()) {
+            $progress = array();
+
+            $USER_CODE = LTRIM(RTRIM(Input::get('USER_CODE')));
+            $USER_NAME = LTRIM(RTRIM(Input::get('USER_NAME')));
+             $STATUS = LTRIM(RTRIM(Input::get('STATUS')));
+              $EMAIL = LTRIM(RTRIM(Input::get('EMAIL')));
+               $COUNTRY = LTRIM(RTRIM(Input::get('COUNTRY')));
+            $limit = Input::get('length1');
+            $start = Input::get('start');
+            $IDS=\Session::get('pid');
+//           $user = Users:: where('id', '=',Session::get('uid'))->get();
+//                $org = DB::table('org_users')->where('UA_ID', Session::get('uid'))->get();
+//                $resultx['rows'] = DB::table('org_users')->where('ORG_UA_ID', $org[0]->ORG_UA_ID)->get();  
+            $_SUBQUERY = 'SELECT  * FROM `org_users` WHERE ORG_UA_ID = ' . "'" . $IDS . "'" . '';
+          
+            if($USER_CODE != ''){
+               $_SUBQUERY=$_SUBQUERY.' AND USER_CODE = ' . "'" . $USER_CODE . "'" . ' '; 
+            }
+//            
+          if($EMAIL != ''){
+              $getemail=   DB::table('tb_users')->where('email','=',$EMAIL)->get();
+                if(count($getemail)!=0){
+               $_SUBQUERY=$_SUBQUERY.' AND UA_ID = ' . "'" . $getemail[0]->id . "'" . ' '; 
+                }
+            }
+            
+             if($STATUS != ''){
+               $_SUBQUERY=$_SUBQUERY.' AND STATUS = ' . "'" . $STATUS . "'" . ' '; 
+            }
+             if($COUNTRY != ''){
+                  $getcntry= DB::table('country_master')->where('COUNTRY_NAME','=',$COUNTRY)->get();
+                 if(count($getcntry)!=0){
+               $_SUBQUERY=$_SUBQUERY.' AND COUNTRY_CODE = ' . "'" . $getcntry[0]->COUNTRY_ID . "'" . ' '; 
+                 }
+            }
+            
+            $result_count = DB::select($_SUBQUERY);
+            $resultx = DB::select($_SUBQUERY." LIMIT $limit OFFSET $start");
+            $totalData = count($result_count);
+            $totalFiltered = $totalData;
+
+            for ($i = 0; $i < count($resultx); $i++) {
+              $xc=   DB::table('tb_users')->where('id','=',$resultx[$i]->UA_ID)->get();
+              $xc1= DB::table('country_master')->where('COUNTRY_ID','=',$resultx[$i]->COUNTRY_CODE)->get();
+                             
+                $one =$i + $start + 1; 
+                $two = $resultx[$i]->USER_CODE.'-'.$resultx[$i]->UA_ID.','.$resultx[$i]->ORG_UA_ID;
+                $three =$xc[0]->username;
+               $four=$xc[0]->email;
+               $five=$xc1[0]->COUNTRY_NAME;
+                $six=$resultx[$i]->STATUS;
+                
+                  $progress[$i] = array('1' => $one,
+                    '2' => $two,
+                    '3' => $three,
+                      '4' => $four,
+                       '5' => $five,
+                       '6' => $six,
+                      );
+            }
+
+
+         
+           $json_data = [
+                "draw" => intval(Input::get('draw')),
+                "recordsTotal" => $totalData,
+                "recordsFiltered" => intval($totalFiltered),
+                "data" => $progress
+           ];
+//
+//            return json_encode($json_data);
+            
+             return Response()->json($json_data);
+    }
+    }  
+    
+    
+    
     public function allPosts(Request $request) {
 //        print_r("arun");exit();
 
