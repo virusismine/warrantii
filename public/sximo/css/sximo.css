@@ -93,7 +93,7 @@ h3,h4,h5 {
 .nav > li > a {
   color: #a7b1c2;
   font-weight: 500;
-  font-size:11px;
+  font-size: 13px;
   padding: 10px 10px 10px 35px;
 }
 
@@ -2373,3 +2373,9 @@ ul.uploadedLists li { border-bottom: solid 1px #eee; padding: 5px; clear: both;}
   }
 
  .nav > li > a.avatar > img {border: solid 2px #ff0000; } 
+ 
+ .parsley-error-list {
+
+    display: none;
+
+}

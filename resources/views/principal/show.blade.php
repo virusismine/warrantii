@@ -14,8 +14,7 @@
                    <div class="page-title half-div">
      
         <a href="{{ URL::to('principal') }}" class="tips icon-btn create-page" title="Cancel"><img src="{{ asset('sximo/images/icons/back.png')}}"/></a>
-    <a class="tips icon-btn create-page hidden" title="Save" onclick="page_submit()"><img src="{{ asset('sximo/images/icons/save.png')}}" /></a>
-    <a onclick="window.location.reload()" class="tips icon-btn create-page" title="Reset"><img src="{{ asset('sximo/images/icons/reset.png')}}" /></a>
+    <a href="{{ URL::route('principal.edit',$principal[0]->PRINCIPAL_ID)}}" class="tips icon-btn show-page" title="Edit"><img src="{{ asset('sximo/images/icons/edit.png')}}" /></a>
      </div>
 	</div>
 

@@ -189,6 +189,7 @@ class UserController extends Controller {
 						\Session::put('eid', $row->email);
 						\Session::put('ll', $row->last_login);
 						\Session::put('fid', $row->first_name.' '. $row->last_name);	
+                                                \Session::put('pid', 3);	
 						if(\Session::get('lang') =='')
 						{
 							\Session::put('lang', CNF_LANG);	

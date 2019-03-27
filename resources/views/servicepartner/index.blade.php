@@ -2,50 +2,74 @@
 
 @section('content')
 {{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
-  <div class="page-content row">
-	
-	
-	<div class="page-content-wrapper m-t">	 	
-
-<div class="sbox animated fadeInRight">
-	<div class="sbox-title">
-		 <h3><i class="icon-bars"></i>  {{ $pageTitle }} <small>{{ $pageNote }}</small></h3>
+<div class="page-content row">
 
 
-			
-                   <div class="page-title half-div">
-        <!--<h3> {{ $pageTitle }} <small>{{ $pageNote }}</small></h3>-->
-        <a href="#" class="tips icon-btn index-page" title="Summary"><img src="{{ asset('sximo/images/icons/summary.png')}}" /></a>
-       
-        <a href="{{ URL::to('insurer/create') }}" class="tips icon-btn index-page" title="Add"><img src="{{ asset('sximo/images/icons/add.png')}}" /></a>
-     
-        <a href="#" class="tips icon-btn index-page" title="Print"><img src="{{ asset('sximo/images/icons/print.png')}}" /></a>
-        <a href="#" class="tips icon-btn index-page" title="Info"><img src="{{ asset('sximo/images/icons/info.png')}}" /></a>
-        <a href="#" class="tips icon-btn index-page" title="Export"><img src="{{ asset('sximo/images/icons/export.png')}}" /></a>
-      </div>
-                 <div class="text-right half-div" style='    margin-top: -22px;'>
+  <div class="page-content-wrapper m-t">	 	
+
+    <div class="sbox animated fadeInRight">
+      <div class="sbox-title">
+        <h3><i class="icon-bars"></i>  {{ $pageTitle }} <small>{{ $pageNote }}</small></h3>
+
+        
+        <div class="page-title half-div">
+<!--<h3> {{ $pageTitle }} <small>{{ $pageNote }}</small></h3>-->
+          <a href="#" class="tips icon-btn index-page" title="Summary"><img src="{{ asset('sximo/images/icons/summary.png')}}" /></a>
+
+          <a href="{{ URL::to('servicepartner/create') }}" class="tips icon-btn index-page" title="Add"><img src="{{ asset('sximo/images/icons/add.png')}}" /></a>
+
+          <a href="#" class="tips icon-btn index-page" title="Print"><img src="{{ asset('sximo/images/icons/print.png')}}" /></a>
+          <a href="#" class="tips icon-btn index-page" title="Info"><img src="{{ asset('sximo/images/icons/info.png')}}" /></a>
+          <a href="#" class="tips icon-btn index-page" title="Export"><img src="{{ asset('sximo/images/icons/export.png')}}" /></a>
+        </div>
+        <div class="text-right half-div" style='    margin-top: -22px;'> 
             <a id="show_popup" class="tips icon-btn index-page" title="Search"><img src="{{ asset('sximo/images/icons/filter.png')}}"/></a>
             <a href="#" class="tips icon-btn index-page" title="Menu"><img src="{{ asset('sximo/images/icons/menu-button.png')}}" /></a>
-      </div>
-	</div>
-	<div class="sbox-content"> 	
-	  <div class="pop-up pop_up_box">
+        </div>
+         <div class="pop-up pop_up_box">
         <div class="col-md-12 cln-padding"><button class="pop-hide right-x">&#10006;</button></div>
         <form class="form-horizontal">
-        <div class="col-md-12 cln-padding">
+           <div class="col-md-12 cln-padding">
         <div class="form-group">
-            <label for="PRINCIPAL_CODE" class=" control-label col-md-5 no-padding text-left">Insurer Code</label>
+            <label for="PARTNER_CODE" class=" control-label col-md-5 no-padding text-left">Partner Code</label>
             <div class="col-md-7 no-padding">
-               <input type="text" id="PRINCIPAL_CODE" class="form-control PRINCIPAL_CODE" required="" name="PRINCIPAL_CODE" >                     
+                <input type="text" id="PARTNER_CODE" class="form-control PARTNER_CODE" required="" name="PARTNER_CODE" >                                  
+            </div>
+            </div>     
+        </div>
+
+        <div class="col-md-12 cln-padding">
+            <div class="form-group">
+            <label for="PARTNER_NAME" class=" control-label col-md-5 no-padding text-left">Partner Name</label>
+            <div class="col-md-7 no-padding">
+                <input type="text" id="PARTNER_NAME" class="form-control PARTNER_NAME" required="" name="PARTNER_NAME" >                     
+            </div>
+            </div>     
+        </div>
+        
+        <div class="col-md-12 cln-padding">
+            <div class="form-group">
+            <label for="LOCATION_CODE" class=" control-label col-md-5 no-padding text-left">Location Name</label>
+            <div class="col-md-7 no-padding">
+                <input type="text" id="LOCATION_CODE" class="form-control LOCATION_CODE" required="" name="LOCATION_CODE" >                     
+            </div>
+            </div>     
+        </div>  
+            
+        <div class="col-md-12 cln-padding">
+            <div class="form-group">
+            <label for="PARTNER_MOBILE" class=" control-label col-md-5 no-padding text-left">Partner Mobile</label>
+            <div class="col-md-7 no-padding">
+                <input type="text" id="PARTNER_MOBILE" class="form-control PARTNER_MOBILE" required="" name="PARTNER_MOBILE" >                     
             </div>
             </div>     
         </div>
             
         <div class="col-md-12 cln-padding">
             <div class="form-group">
-            <label for="PRINCIPAL_NAME" class=" control-label col-md-5 no-padding text-left">Insurer Name</label>
+            <label for="PARTNER_EMAIL" class=" control-label col-md-5 no-padding text-left">Partner Email</label>
             <div class="col-md-7 no-padding">
-                <input type="text" id="PRINCIPAL_NAME" class="form-control PRINCIPAL_NAME" required="" name="PRINCIPAL_NAME" >                     
+                <input type="text" id="PARTNER_EMAIL" class="form-control PARTNER_EMAIL" required="" name="PARTNER_EMAIL" >                     
             </div>
             </div>     
         </div>
@@ -54,60 +78,67 @@
             <div class="form-group">
             <label for="STATUS" class=" control-label col-md-5 no-padding text-left">Status</label>
             <div class="col-md-7 no-padding">
-            {!! Form::select('STATUS', array(''=>'Select', 'N'=>'New','E'=>'Enabled','D'=>'Disabled'),Input::old('STATUS'),array('class' => 'form-control STATUS','id' => 'STATUS', 'required')) !!} 
-            
+            {{ Form::select('STATUS', array(''=>'Select', 'N'=>'New','E'=>'Enabled','D'=>'Disabled'),Input::old('STATUS'),array('class' => 'form-control STATUS','id' => 'STATUS', 'required')) }}                            
             </div>
             </div>     
         </div>
-            
-        
+          
         <div class="col-md-12 cln-padding">
             <div class="form-group">
                 <label for="TAX_CLASS_DESC" class=" control-label col-md-5 no-padding text-left"></label>
-                <div class="col-md-7 no-padding">
-                <button type="button" class="tips btn btn-sm btn-primary" onclick="searchprincipal()">Search</button>                           
+                <div class="col-md-7 no-padding" style="text-align:right;">
+                <button type="button" class="tips btn btn-sm btn-primary" onclick="searchprincipalpartner()">Search</button>                           
                 </div>
             </div>     
-        </div>
+        </div> 
         </form>
-     	 
-        </div>  
-	
-	 {!! Form::open(array('url'=>'insurer/delete/', 'class'=>'form-horizontal' ,'id' =>'SximoTable' )) !!}
-	 <div class="table-responsive" style="min-height:300px;">
-    <table  width="100%" class="table table-striped diamond_table" id="diamond_table" cellpadding="0" cellspacing="0">
-       <thead>
+    </div>
+      </div>
+      <div class="sbox-content"> 	
+
+
+        {!! Form::open(array('url'=>'servicepartner/delete/', 'class'=>'form-horizontal' ,'id' =>'SximoTable' )) !!}
+        <div class="table-responsive" style="min-height:300px;">
+           <table width="100%" class="table display cell-border diamond_table" id="diamond_table" cellpadding="0" cellspacing="0">
+                <thead>
                             <tr style="background-color: rgb(255, 255, 255);">
                             <th style=" min-width: 60px;">#</th>
-                            <th> Insurer Code</th>
-                            <th> Insurer Name </th>
-                            <th> Created On </th>
-                            <th> Date Of Activation </th>
-                            <th> Status </th>
+                            <th>Partner Code </th>
+                            <th>Partner Name </th>
+                            <th>Location Code</th>
+                            <th>Partner Mobile</th>
+                            <th>Partner Email</th>
+                            <th>Doa </th>
+                            <th>Status </th>
                             </tr>
                 </thead>
 
-        
+            </table>
+          <input type="hidden" name="md" value="" />
+        </div>
+        {!! Form::close() !!}
       
-    </table>
-	
-	</div>
-	{!! Form::close() !!}
-	
-	</div>
-</div>	
-	</div>	  
-</div>	
-<input type="hidden" id="length1" name="length1" value="20">
-<input type="hidden" id="page_type" name="page_type" value="INSURER">
+      </div>
+    </div>	
+  </div>	  
+</div>
 
+
+
+
+<input type="hidden" id="page_type" name="page_type" value="SERVICE">
+<input type="hidden" id="length1" name="length1" value="20">
 <style type="text/css">
-    table.dataTable tbody td:nth-child(2), table.dataTable tbody td:nth-child(3)
+table thead tr th{
+   text-align: center;
+}
+  
+table.dataTable tbody td:nth-child(2), table.dataTable tbody td:nth-child(3)
     {text-align:left !important;}
     
-    table.dataTable tbody td:nth-child(4), table.dataTable tbody td:nth-child(5),table.dataTable tbody td:nth-child(1)
+    table.dataTable tbody td:nth-child(1)
     {text-align:center !important;}
-    
+   
  table.dataTable tbody td {
     padding: 0px 10px 0px 10px !important;
     line-height: 23px;
@@ -136,31 +167,36 @@ table.dataTable tbody td:last-child {padding: 0px 0px 0px 0px !important;}
   
   
   
-  #diamond_table_paginate {
+#diamond_table_paginate {
     position: fixed;
     bottom: 5px;
     right: 0px;
- }
+}
 
- #diamond_table_info {
+#diamond_table_info {
     position: fixed;
     bottom: 5px;
- }
-  table.dataTable.no-footer {
+}
+
+table.dataTable.no-footer {
    border-bottom: 1px solid #dedede;
 }
   
   
-  table.dataTable thead th, table.dataTable tfoot th {
+table.dataTable thead th, table.dataTable tfoot th {
     font-weight: inherit;
      
 }
+  
+/*table.dataTable tbody th, table.dataTable tbody td {
+    padding: 0px 10px !important;
+}*/
 
-  .border {
+.border {
       border-left: 1px solid #ddd;
       border-right: 1px solid #ddd;
       border-bottom: 1px solid #ddd;
-  }
+}
 
   .divheight {
       padding: 4px;
@@ -188,6 +224,11 @@ table.dataTable tbody td:last-child {padding: 0px 0px 0px 0px !important;}
       padding: 5px;
 
   }
+
+/*  table.dataTable tbody th, table.dataTable tbody td {
+      padding: 2px 10px !important;
+  }*/
+
 
   .multicollab_table td {
       padding: 4px;
@@ -296,6 +337,19 @@ table.dataTable tbody td:last-child {padding: 0px 0px 0px 0px !important;}
 }
 </style>
 
+
+
+<script>
+    $(document).ready(function () {
+
+        $('.do-quick-search').click(function () {
+            $('#SximoTable').attr('action', '{{ URL::to("orderdetail/multisearch")}}');
+            $('#SximoTable').submit();
+        });
+
+    });
+</script>
+
 <script>
     $(".DATE").datepicker({
         dateFormat: 'dd-mm-yy',
@@ -307,7 +361,14 @@ table.dataTable tbody td:last-child {padding: 0px 0px 0px 0px !important;}
     });
 </script>
 
+<script type="text/javascript">
 
+   
+
+    
+    
+
+</script>
 
 <script>
     $(document).ready(function () {
@@ -325,8 +386,6 @@ table.dataTable tbody td:last-child {padding: 0px 0px 0px 0px !important;}
         //alert("in");
         $(".log").hide();
         $(".highlight").css("background", "transparent");
-
-
     });
 
 </script>
@@ -338,18 +397,12 @@ table.dataTable tbody td:last-child {padding: 0px 0px 0px 0px !important;}
         });
     });
 </script>
-
-
-
-
-
-
-
+   
 <script>
     
-     function searchprincipal() {
+     function searchprincipalpartner() {
     $(".pop-up").hide();
-//     alert("days");
+//     alert("days")  ;
 //       if(days<=31) {
            oTable.ajax.reload(); 
 
@@ -368,8 +421,7 @@ var windowHeight = $(window).innerHeight();
         $('#length1').val( indisplaylength1);
 //          alert(limit);
 
-
-    
+//        
                 oTable = $('#diamond_table').DataTable({
             "processing": true,
 //            oLanguage: {
@@ -377,30 +429,38 @@ var windowHeight = $(window).innerHeight();
 //            },
             "serverSide": true,
             "ajax": {
-                "url": "{{ url('searchprincipal') }}",
+                "url": "{{ url('searchprincipalpartner') }}",
                 "dataType": "json",
                 "type": "POST",
                 "_token": $(this).find('input[name=_token]').val(),
                 data: {
-                    
-                    PRINCIPAL_CODE: function () {
-                        return $('#PRINCIPAL_CODE').val();
+                           
+                    PARTNER_CODE: function () {
+                        return $('#PARTNER_CODE').val();
                     },
-                    PRINCIPAL_NAME: function () {
-                        return $('#PRINCIPAL_NAME').val();
+                    PARTNER_NAME: function () {
+                        return $('#PARTNER_NAME').val();
+                    },
+                    LOCATION_CODE: function () {
+                        return $('#LOCATION_CODE').val();
+                    },
+                    PARTNER_MOBILE: function () {
+                        return $('#PARTNER_MOBILE').val();
+                    },
+                    PARTNER_EMAIL: function () {
+                        return $('#PARTNER_EMAIL').val();
                     },
                     STATUS: function () {
                         return $('#STATUS').val();
                     },
-                     length1: function () {
+                    length1: function () {
                         return $('#length1').val();
-                    },
-                    page_type: function () {
+                    }, page_type: function () {
                         return $('#page_type').val();
-                    }
+                    }  
                    
               
-            }     
+    }     
             },
             "columns": [
                 {"data": "1"},
@@ -410,25 +470,29 @@ var windowHeight = $(window).innerHeight();
                     
                 render: function (data) {
                     var items = data.split(',');
-                       return '<a href='+ 'insurer' + '/' + items[1] + '>' + items[0] + '</a>';
+                       return '<a href='+ 'servicepartner' + '/' + items[1] + '>' + items[0] + '</a>';
                 }
                 },
                 {"data": "3"},
                 {"data": "4"},
                 {"data": "5"},
-                {data: "6",
-                render: function (data) {
-                   if (data == 'E'){
+                {"data": "6"},
+                {"data": "7"},
+                {data: "8",
+               render: function (data) {
+ 
+                   if (data == 'E') {
                        return  '<div class="E"> ENABLED </div>';
-                   } else if(data == 'D'){
+                   } else if(data == 'D') {
                        return '<div class="D"> DISABLED </div>';
-                   } else if(data == 'N'){
+                   } else if(data == 'N') {
                        return '<div class="N"> NEW </div>';
                    }
-                }
+ 
+               }
                 },
-             
-            ] ,    
+            ],    
+                    
             initComplete: function () {
                 this.api().columns().every(function () {
                     var column = this;
@@ -448,10 +512,8 @@ var windowHeight = $(window).innerHeight();
                         select.append('<option value="' + d + '">' + d + '</option>')
                     });
                 });
-
             },
            
-          
             "bLengthChange": false,
             "searching": false,
             scrollX: true,
@@ -462,16 +524,8 @@ var windowHeight = $(window).innerHeight();
            sEmptyTable: "Sorry, no results found!"
            }
            
-            
         });
-        
-        
-        
-        
-	
 });
-
-
 
 </script> 
 @stop
