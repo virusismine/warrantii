@@ -4,8 +4,12 @@ use App\Http\Controllers\controller;
 use App\Models\Orglocation;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use Validator, Input, Redirect ; 
-
+use Validator, Input, Redirect,DB ; 
+use App\Models\Musers;
+use App\Models\Account;
+use App\Models\orgusers;
+use App\Models\organisation;
+use App\Models\Principalclass;
 
 class OrglocationController extends Controller {
 
@@ -38,6 +42,207 @@ class OrglocationController extends Controller {
 
 		
 	}
+        
+        
+        
+        
+        
+        
+
+     public function create(){
+          $city = DB::table('cities')->orderBy('city_name','ASC')->lists('city_name','city_id'); 
+            $state = DB::table('state_code_master')->lists('STATE_NAME','STATE_CODE_ID');
+            $country = DB::table('country_master')->lists('COUNTRY_NAME','COUNTRY_ID');
+           
+   //  print_r($city);exit();
+      
+       $this->data = array(
+			'pageTitle'	=> 	'Create Organization location',
+			'pageNote'	=> '',
+			'pageModule'=> 'orglocation',
+			'return'	=> self::returnUrl(),
+           'city'=>$city,
+           'state'=>$state,
+           'country'=>$country,
+		);
+         return view('orglocation.create',$this->data );
+   }  
+   
+     public function store(Request $request) {
+        $rules = array(
+        );
+        $validator = Validator::make($data = Input::all(), $rules);
+//print_r(Input::all());exit();
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        } else {
+            DB::beginTransaction();
+//           try {
+//                  creating object
+            
+         
+             $user = Musers:: where('id', '=',\Session::get('uid'))->get();
+             $orguser = Orgusers::where('UA_ID','=',\Session::get('uid'))->get();
+             $detail9 = Orglocation::where('LOCATION_CODE', '=', $request->input('LOCATION_CODE'))->get();
+            //print_r(Input::get('CUST_MOBILE'););exit();
+             
+            if(Input::get('HOST_USER') == 'on')
+            {
+                $HOST_USER = 1;
+            }
+            else{
+                $HOST_USER = 0;
+            }
+             
+            if (count($detail9) == 0) {
+            
+                
+             Orglocation::insert([
+                    'ORG_UA_ID' => $orguser[0]->ORG_UA_ID,
+                    'LOCATION_TYPE' => $request->input('LOCATION_TYPE'),
+                      'LOCATION_TYPE' => $request->input('LOCATION_TYPE'),
+                      'LOCATION_NAME' => $request->input('LOCATION_NAME'),
+                      'LOCATION_CODE' => $request->input('LOCATION_CODE'),
+                      'ADDRESS' => $request->input('ADDRESS'),
+                      'CITY' => $request->input('CITY'),
+                      'LOCATION_TYPE' => $request->input('LOCATION_TYPE'),
+                    'STATE' => $request->input('STATE'),
+                    'COUNTRY' => $request->input('COUNTRY'),
+                    'START_OF_OPERATION' => date("Y-m-d"),
+                    'HOST_USER' => $HOST_USER,
+                    'STATUS' => 'N',
+                    'UCO' => \Session::get('uid'),
+                ]);
+                
+             DB::commit();
+             } else {
+                 
+               return Redirect::to('orglocation/create')->with('messagetext',\Lang::get('core.note_error'))->with('msgstatus','error')
+			->withErrors($validator)->withInput();
+            
+             //   return Redirect::to('orglocation/create')->with('message', SiteHelpers::alert('error', 'This Brand Code Already Exists'));
+            }
+//            } catch (Exception $e) {
+//                DB::rollback();
+//                Session::flash('message', SiteHelpers::alert('error', 'Something Went Wrong'));
+//                return Redirect::to('saleinvoice/create');
+//            }
+        }
+        return Redirect::to('orglocation')->with('messagetext',\Lang::get('core.note_success'))->with('msgstatus','success')
+			->withErrors($validator)->withInput();
+    
+    }
+          public function update(Request $request) {
+                  
+//        print_r(Input::get('UA_ID'));exit();
+        $rules = array();
+        $validator = Validator::make($data = Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        } else {
+            DB::beginTransaction();
+//            try {
+  $filters = explode(",",$request->orglocation );
+        $lcode = $filters[0];
+        $org_ua_id = $filters[1]; 
+        
+          
+            
+            
+             Orglocation:: where('LOCATION_CODE', '=', $lcode)->where('ORG_UA_ID', '=', $org_ua_id)
+                    ->update([
+                        'LOCATION_TYPE' => Input::get('LOCATION_TYPE'),
+                        'LOCATION_NAME' => Input::get('LOCATION_NAME'),
+                        'LOCATION_CODE' => Input::get('LOCATION_CODE'),
+                        
+                        'ADDRESS' => Input::get('ADDRESS'),
+                        'CITY' => Input::get('CITY'),
+                        'STATE' => Input::get('STATE'),
+                        'COUNTRY' => Input::get('COUNTRY'),
+                        'LOCATION_CODE' => Input::get('LOCATION_CODE'),
+                                     
+                        
+                        
+                        'ULUO' =>\Session::get('uid'),
+            ]);
+            
+            DB::commit();
+//            } catch (Exception $e) {
+//
+//                Session::flash('message', 'Record already exists');
+//                return Redirect::to('saleinvoice/' . $id . '/edit');
+//            }
+        }
+          return Redirect::to('orglocation')->with('messagetext','Updated Successfully')->with('msgstatus','success')
+			->withErrors($validator)->withInput();
+        
+    } 
+    
+    
+       
+    
+    
+    
+   
+     public function edit($id) {
+               
+        $filters = explode(",",$id );
+        $locationcode = $filters[0];
+        $uaid = $filters[1];       
+            
+         $city = DB::table('cities')->orderBy('city_name','ASC')->lists('city_name','city_id'); 
+        $state = DB::table('state_code_master')->lists('STATE_NAME','STATE_CODE_ID');
+        $country = DB::table('country_master')->lists('COUNTRY_NAME','COUNTRY_ID');
+        $location = Orglocation::where('LOCATION_CODE','=',$locationcode)->where('ORG_UA_ID','=',$uaid)->get();
+         
+        $this->data = array(
+            'pageTitle' => 'Update Organization location',
+            'pageNote' => '',
+            'pageModule' => 'orglocation',
+            'return' => self::returnUrl(),
+            'city' => $city,
+            'state' => $state,
+            'country' => $country,
+            'location' => $location,
+        );
+
+      
+         return view('orglocation.edit',$this->data );
+//              print_r($principallocation);exit();
+    } 
+        
+   
+   
+   
+   
+        
+         public function show($id) {
+               
+        $filters = explode(",",$id );
+        $locationcode = $filters[0];
+        $uaid = $filters[1];       
+            
+         $city = DB::table('cities')->orderBy('city_name','ASC')->lists('city_name','city_id'); 
+        $state = DB::table('state_code_master')->lists('STATE_NAME','STATE_CODE_ID');
+        $country = DB::table('country_master')->lists('COUNTRY_NAME','COUNTRY_ID');
+        $location = Orglocation::where('LOCATION_CODE','=',$locationcode)->where('ORG_UA_ID','=',$uaid)->get();
+         
+        $this->data = array(
+            'pageTitle' => 'Show Organization location',
+            'pageNote' => '',
+            'pageModule' => 'orglocation',
+            'return' => self::returnUrl(),
+            'city' => $city,
+            'state' => $state,
+            'country' => $country,
+            'location' => $location,
+        );
+
+      
+         return view('orglocation.show',$this->data );
+//              print_r($principallocation);exit();
+    } 
+        
 
 	public function index( Request $request )
 	{

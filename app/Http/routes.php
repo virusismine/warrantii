@@ -88,6 +88,8 @@ Route::group(['middleware' => 'auth' , 'middleware'=>'sximoauth'], function()
                  Route::resource('searchproduct', 'Post1Controller@searchproduct');
                  Route::resource('searchfinancialyear', 'Post1Controller@searchfinancialyear');
                   Route::resource('searchdelivery', 'Post1Controller@searchdelivery');
+                   Route::resource('searchPrincipalUsers', 'Post1Controller@searchPrincipalUsers');
+                  
 });
 
  
@@ -112,3 +114,4 @@ Route::group(['middleware' => 'auth' , 'middleware'=>'sximoauth'], function()
                  Route::resource('searchproduct', 'Post1Controller@searchproduct');
                  Route::resource('searchfinancialyear', 'Post1Controller@searchfinancialyear');
                   Route::resource('searchdelivery', 'Post1Controller@searchdelivery');
+                     Route::resource('searchPrincipalUsers', 'Post1Controller@searchPrincipalUsers');
